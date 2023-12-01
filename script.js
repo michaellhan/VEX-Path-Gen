@@ -5,6 +5,7 @@ let canvasWidth = 720; // Set the width of the canvas
 let canvasHeight = 720; // Set the height of the canvas
 let dots = []; // Array to store the coordinates of the dots
 let waypoints = [];
+let pathGenerated = [];
 let selectedDot = null;
 let counter = 0;
 
@@ -29,6 +30,14 @@ function draw() {
       fill(255, 0, 0, 100);
     }
     ellipse(dot.x, dot.y, 40);
+    waypoints.push(Point(dot.x, dot.y, counter))
+    if(waypoints.length > 3){
+      pathGenerated = catmullRom(waypoints);
+    }
+    for(let Point of pathGenerated){
+      fill(255, 204, 0);
+      ellipse(Point.x, Point.y, 7.5);
+    }
     counter++;
   }
   
