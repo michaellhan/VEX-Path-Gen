@@ -28,7 +28,9 @@ function setup() {
   canvas.mousePressed(startDragging);
   canvas.mouseReleased(stopDragging);
   numPointsSlider = createSlider(3, 20, 5); // min, max, default value
-  numPointsSlider.position(width + 20, height - 120); // Adjust position as needed
+  const sliderX = width + 20; // X position on the right side
+  const sliderY = 20; // Y position above the coordinates
+  numPointsSlider.position(sliderX, sliderY); // Adjust position as needed
   numPointsSlider.style('width', '100px'); // Adjust the width of the slider
 }
 
