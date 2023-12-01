@@ -43,7 +43,12 @@ function setup() {
 }
 
 function updatePathGenMethod() {
-  selectedMethod = pathGenMethodDropdown.value();
+  let selectedMethod = pathGenMethodDropdown.value;
+  if (selectedMethod === 'catmull-rom') {
+    pathGenerated = catmullRom(waypoints, numPoints);
+  } else if (selectedMethod === 'cubic-spline') {
+    pathGenerated = cubicSpline2(waypoints, numPoints);
+  }
 }
 
 function positionSlider() {
