@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-left: 20px; /* Add padding to move the field to the right */
+  padding-left: 500px;
 }
 
 #controls-container {
@@ -26,7 +26,7 @@
 }
 
 #slider-container, #dropdown-container, #download {
-  margin-top: 20px; /* Add margin to create space between the elements */
+  margin-top: 100px; /* Add margin to create space between the elements */
 }
 
 #dots {
