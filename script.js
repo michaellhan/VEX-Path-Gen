@@ -28,18 +28,21 @@ function setup() {
 function draw() {
   background(field);
 
-  // Draw the path only if there are more than three points
-  if (dots.length > 3) {
-    const numPoints = 100; // Number of points on the generated path
-    waypoints = catmullRom(dots, numPoints);
+  // Convert dots array into waypoints array with Point objects
+  waypoints = dots.map(dot => new Point(dot.x, dot.y, dots.indexOf(dot)));
+
+  // Check if waypoints array has more than 3 points
+  if (waypoints.length > 3) {
+    const numPoints = 5; // Number of points on the generated path using catmullRom
+    pathGenerated = catmullRom(waypoints, numPoints);
 
     // Draw the generated path
     noFill();
     beginShape();
-    for (let i = 0; i < waypoints.length - 1; i++) {
+    for (let i = 0; i < pathGenerated.length - 1; i++) {
       stroke(0, 255, 0); // Set path color
       strokeWeight(2); // Set path stroke weight
-      line(waypoints[i].x, waypoints[i].y, waypoints[i + 1].x, waypoints[i + 1].y);
+      line(pathGenerated[i].x, pathGenerated[i].y, pathGenerated[i + 1].x, pathGenerated[i + 1].y);
     }
     endShape();
   }
@@ -53,6 +56,15 @@ function draw() {
     }
     ellipse(dot.x, dot.y, 40);
     counter++;
+  }
+
+  // Display coordinates
+  if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
+    const x = (mouseX - width / 2) / (width / 2) * 72;
+    const y = -(mouseY - height / 2) / (height / 2) * 72;
+    coordinatesElement.textContent = `(${Math.round(x)}, ${Math.round(y)})`;
+  } else {
+    coordinatesElement.textContent = '(?, ?)';
   }
 
   // Display coordinates
