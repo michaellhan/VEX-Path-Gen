@@ -66,8 +66,18 @@ function draw() {
 
   const numPoints = numPointsSlider.value();
 
-  // Check if waypoints array has more than 3 points
-  if (waypoints.length > 3) {
+  // Check if waypoints array has more than 1 points
+  if (waypoints.length > 1) {
+    first = waypoints[0];
+    second = waypoints[1];
+    last = waypoints[waypoints.length - 1];
+    secondToLast = waypoints[waypoints.length - 2];
+    firstGhostPoint = (first.multiply(2)).subtract(second);
+    waypoints.unshift(firstGhostPoint);
+
+    lastGhostPoint = (secondToLast.multiply(2)).subtract(last);
+    waypoints.push(lastGhostPoint)
+
     pathGenerated = catmullRom(waypoints, numPoints);
 
     // Draw the generated path
