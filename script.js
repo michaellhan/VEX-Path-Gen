@@ -9,6 +9,7 @@ let selectedDot = null;
 let draggedPointIndex = -1;
 let offsetX = 0;
 let offsetY = 0;
+let numPointsSlider; // Declare a global variable for the slider
 
 function preload() {
   field = loadImage('field.png', () => {
@@ -27,11 +28,23 @@ function setup() {
   dotsElement = document.getElementById('dots');
   canvas.mousePressed(startDragging);
   canvas.mouseReleased(stopDragging);
+  // Create the slider
   numPointsSlider = createSlider(3, 20, 5); // min, max, default value
-  const sliderX = width + 20; // X position on the right side
-  const sliderY = 20; // Y position above the coordinates
-  numPointsSlider.position(sliderX, sliderY); // Adjust position as needed
   numPointsSlider.style('width', '100px'); // Adjust the width of the slider
+
+  // Position the slider and its label
+  positionSlider();
+}
+
+function positionSlider() {
+  const sliderX = width / 2 - 50; // X position centered above the button
+  const sliderY = height + 50; // Y position below the canvas and above the button
+  numPointsSlider.position(sliderX, sliderY); // Adjust position as needed
+
+  const labelX = width / 2 - 50; // X position centered above the button
+  const labelY = height + 20; // Y position above the slider
+  const sliderLabel = select('#slider-label');
+  sliderLabel.position(labelX, labelY); // Adjust position as needed
 }
 
 function draw() {

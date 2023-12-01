@@ -31,3 +31,14 @@
 h2 {
   margin-bottom: 10px;
 }
+
+/* Add styles for the slider label */
+#slider-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+#slider-label {
+  display: block;
+  margin-bottom: 5px;
+}
