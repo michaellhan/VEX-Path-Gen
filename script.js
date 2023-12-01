@@ -9,6 +9,7 @@ let selectedDot = null;
 let draggedPointIndex = -1;
 let offsetX = 0;
 let offsetY = 0;
+let numPoints = 5; // Set a default value for numPoints
 let numPointsSlider; // Declare a global variable for the slider
 
 function preload() {
@@ -29,22 +30,26 @@ function setup() {
   canvas.mousePressed(startDragging);
   canvas.mouseReleased(stopDragging);
   // Create the slider
-  numPointsSlider = createSlider(3, 20, 5); // min, max, default value
-  numPointsSlider.style('width', '100px'); // Adjust the width of the slider
-
+  numPointsSlider = createSlider(3, 20, numPoints); // min, max, default value
+  numPointsSlider.position(windowWidth / 2, 100); // Center the slider horizontally
+  numPointsSlider.input(updateNumPoints); // Call updateNumPoints function when slider value changes
   // Position the slider and its label
   positionSlider();
 }
 
 function positionSlider() {
-  const sliderX = windowWidth / 2 + 200; // X position for the slider
-  const sliderY = 30; // Y position for the slider at the very top
+  const sliderX = windowWidth / 2; // X position for the slider (centered horizontally)
+  const sliderY = 100; // Y position for the slider above the coordinates header
   numPointsSlider.position(sliderX, sliderY); // Adjust position as needed
 
-  const labelX = windowWidth / 2 + 200; // X position for the label
-  const labelY = 10; // Y position for the label above the slider
+  const labelX = windowWidth / 2; // X position for the label (centered horizontally)
+  const labelY = 70; // Y position for the label above the slider
   const sliderLabel = select('#slider-label');
   sliderLabel.position(labelX, labelY); // Adjust position as needed
+}
+
+function updateNumPoints() {
+  numPoints = numPointsSlider.value(); // Update numPoints with the slider value
 }
 
 function draw() {
