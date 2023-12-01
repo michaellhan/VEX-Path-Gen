@@ -1,39 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>VEX Spinup Simulation</title>
-
-    <link rel="stylesheet" type="text/css" href="style.css">
-
-    <script src="libraries/p5.min.js"></script>
-    <script src="libraries/p5.sound.min.js"></script>
-    <script src="sketch.js"></script>
-  </head>
-
-  <body style="background: rgb(205, 242, 255);">
-
-    <div id="title"> 
-      VEX Over Under Simulation (WIP):
+<html>
+<head>
+  <title>Vex Path Gen</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div id="canvas-container"></div>
+    <div id="button-and-coordinates">
+      <button id="download">Download Path</button>
+      <p id="coordinates"></p>
     </div>
-
-    <div class="outer">
-      <div class="right">
-        <em>LIST OF COORDINATES:</em>
-        <p id="output" >  </p>
-    
-      </div>
-
-      <div class="left">
-        <main></main>
-      </div>
-    </div>
-
-
-    
-    
-
-  </body>
+  </div>
+  <script src="libraries/p5.min.js"></script>
+  <script src="libraries/p5.sound.min.js"></script>
+  <script src="script.js"></script>
+</body>
 </html>

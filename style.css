@@ -1,31 +1,19 @@
-canvas {
-  display: block;
+.container {
+  display: flex;
 }
 
-.left {
-  float: left;
+#canvas-container {
+  width: 50%;
 }
 
-.right {
-  float: right;
-  text-align: left;
-  padding-right: 20%;
+#button-and-coordinates {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-#output {
-  white-space: pre-line;
-}
-
-#title {
-  color: #333333;
-  font-family: CerebriSans-Bold, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-  font-size: 2em;
-  font-weight: 100;
-  text-align: left;
-  color: rgb(27, 84, 84);
-  
-  /* font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
-  font-size: 60px;
-  padding: 10px;
-  /* display: block; */
+#download {
+  margin-bottom: 20px;
 }
