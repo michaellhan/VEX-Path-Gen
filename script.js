@@ -37,12 +37,12 @@ function setup() {
 }
 
 function positionSlider() {
-  const sliderX = width / 2 - 50; // X position centered above the button
-  const sliderY = height + 50; // Y position below the canvas and above the button
+  const sliderX = windowWidth / 2 + 200; // X position for the slider
+  const sliderY = 30; // Y position for the slider at the very top
   numPointsSlider.position(sliderX, sliderY); // Adjust position as needed
 
-  const labelX = width / 2 - 50; // X position centered above the button
-  const labelY = height + 20; // Y position above the slider
+  const labelX = windowWidth / 2 + 200; // X position for the label
+  const labelY = 10; // Y position for the label above the slider
   const sliderLabel = select('#slider-label');
   sliderLabel.position(labelX, labelY); // Adjust position as needed
 }
