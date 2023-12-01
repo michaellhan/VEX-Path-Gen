@@ -11,6 +11,7 @@ let offsetX = 0;
 let offsetY = 0;
 let numPoints = 15; // Set a default value for numPoints
 let numPointsSlider; // Declare a global variable for the slider
+let pathGenMethodDropdown;
 
 function preload() {
   field = loadImage('field.png', () => {
@@ -35,6 +36,17 @@ function setup() {
   numPointsSlider.input(updateNumPoints); // Call updateNumPoints function when slider value changes
   // Position the slider and its label
   positionSlider();
+  pathGenMethodDropdown = document.getElementById('path-gen-method');
+  pathGenMethodDropdown.addEventListener('change', updatePathGenMethod);
+}
+
+function updatePathGenMethod() {
+  let selectedMethod = pathGenMethodDropdown.value;
+  if (selectedMethod === 'catmull-rom') {
+    pathGenerated = catmullRom(waypoints, numPoints);
+  } else if (selectedMethod === 'cubic-spline') {
+    pathGenerated = cubicSpline2(waypoints, numPoints);
+  }
 }
 
 function positionSlider() {
@@ -60,6 +72,8 @@ function draw() {
     dots[draggedPointIndex].x = mouseX + offsetX;
     dots[draggedPointIndex].y = mouseY + offsetY;
   }
+
+  updatePathGenMethod();
 
   // Convert dots array into waypoints array with Point objects
   waypoints = dots.map(dot => new Point(dot.x, dot.y, dots.indexOf(dot)));
