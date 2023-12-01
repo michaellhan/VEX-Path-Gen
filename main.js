@@ -161,36 +161,3 @@ function stopDragging() {
   draggedPointIndex = -1;
 }
 
-
-
-function findPoint(p0, p1, p2, p3, t, scale) {
-  const c0 = p1;
-  const c1 = p0.multiply(-scale).add(p2.multiply(scale));
-  const c2 = p0.multiply(scale * 2).add(p1.multiply(scale - 3)).add(p2.multiply(3 - 2 * scale)).add(p3.multiply(-scale));
-  const c3 = p0.multiply(-scale).add(p1.multiply(2 - scale)).add(p2.multiply(scale - 2)).add(p3.multiply(scale));
-
-  const t2 = t * t;
-  const t3 = t2 * t;
-
-  const newPoint = c0.add(c1.multiply(t)).add(c2.multiply(t2)).add(c3.multiply(t3));
-  return newPoint;
-}
-
-function catmullRom(path, numPoints) {
-  const newPath = [];
-
-  for (let j = 0; j < path.length - 3; j++) {
-    for (let i = 0; i < numPoints; i++) {
-      const t = i / numPoints;
-      const addPoint = findPoint(path[j], path[j + 1], path[j + 2], path[j + 3], t, 0.5);
-      addPoint.index = i;
-      newPath.push(addPoint);
-    }
-  }
-
-  const lastPoint = path[path.length - 2];
-  lastPoint.index = (path.length - 3) * numPoints;
-  newPath.push(lastPoint);
-
-  return newPath;
-}
