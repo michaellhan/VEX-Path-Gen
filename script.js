@@ -1,13 +1,16 @@
 let field;
 let coordinatesElement;
+let canvasWidth = 720; // Set the width of the canvas
+let canvasHeight = 720; // Set the height of the canvas
 
 function preload() {
   field = loadImage('field.png');
 }
 
 function setup() {
-  const canvas = createCanvas(field.width, field.height);
+  const canvas = createCanvas(canvasWidth, canvasHeight);
   canvas.parent('canvas-container');
+  field.resize(canvasWidth, canvasHeight); // Resize the image to fit the canvas
   coordinatesElement = document.getElementById('coordinates');
 }
 
