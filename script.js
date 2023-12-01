@@ -66,7 +66,7 @@ function draw() {
     } else {
       fill(255, 0, 0, 100);
     }
-    ellipse(dot.x, dot.y, 40);
+    ellipse(dot.x, dot.y, 15);
     counter++;
   }
 
