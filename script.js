@@ -68,7 +68,6 @@ function draw() {
 
   // Check if waypoints array has more than 3 points
   if (waypoints.length > 3) {
-    const numPoints = 5; // Number of points on the generated path using catmullRom
     pathGenerated = catmullRom(waypoints, numPoints);
 
     // Draw the generated path
