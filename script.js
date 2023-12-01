@@ -7,7 +7,6 @@ let dots = []; // Array to store the coordinates of the dots
 let waypoints = [];
 let pathGenerated = [];
 let selectedDot = null;
-let counter = 0;
 
 function preload() {
   field = loadImage('field.png', () => {
@@ -35,10 +34,11 @@ function draw() {
       fill(255, 0, 0, 100);
     }
     ellipse(dot.x, dot.y, 40);
-    for(let point of pathGenerated){
-      fill(255, 204, 0);
-      ellipse(point.x, point.y, 5);
-    }
+  }
+
+  for(let point of pathGenerated){
+    fill(255, 204, 0);
+    ellipse(point.x, point.y, 5);
   }
   
   if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
