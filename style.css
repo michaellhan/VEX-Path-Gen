@@ -25,8 +25,16 @@
   align-items: center;
 }
 
-#slider-container, #dropdown-container, #download {
-  margin-top: 50px; /* Add margin to create space between the elements */
+#slider-container {
+  margin-top: 50px;
+}
+
+#dropdown-container {
+  margin-top: 80px; /* Increase margin to create more space */
+}
+
+#download {
+  margin-top: 50px;
 }
 
 #dots {
