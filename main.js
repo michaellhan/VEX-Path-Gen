@@ -74,7 +74,7 @@ function draw() {
   waypoints = dots.map(dot => new Point(dot.x, dot.y, dots.indexOf(dot)));
 
   const numPoints = numPointsSlider.value();
- 
+  updatePathGenMethod()
   if (selectedMethod === 'catmull-rom') {
       // Check if waypoints array has more than 1 points
     if (waypoints.length > 1) {
