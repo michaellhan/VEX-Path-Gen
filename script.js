@@ -6,8 +6,6 @@ let canvasHeight = 720; // Set the height of the canvas
 let dots = []; // Array to store the coordinates of the dots
 let waypoints = [];
 let selectedDot = null;
-let counter = 0;
-
 let draggedPointIndex = -1;
 let offsetX = 0;
 let offsetY = 0;
@@ -72,7 +70,6 @@ function draw() {
       fill(255, 0, 0, 100);
     }
     ellipse(dot.x, dot.y, 15);
-    counter++;
   }
 
   // Display coordinates

@@ -31,11 +31,3 @@
 h2 {
   margin-bottom: 10px;
 }
-
-#numPointsSlider {
-  position: absolute;
-  top: calc(50% + 20px); /* Adjust the vertical position */
-  left: calc(50% + 100px); /* Adjust the horizontal position */
-  transform: translate(-50%, -50%);
-  width: 150px; /* Adjust the width of the slider */
-}
