@@ -29,7 +29,7 @@ function draw() {
     const y = -(mouseY - height / 2) / (height / 2) * 72;
     coordinatesElement.textContent = `(${Math.round(x)}, ${Math.round(y)})`;
   } else {
-    coordinatesElement.textContent = '';
+    coordinatesElement.textContent = '(?, ?)';
   }
 }
 

@@ -4,9 +4,6 @@
 
 #canvas-container {
   width: 50%;
-}
-
-#field-and-coordinates {
   display: flex;
   flex-direction: column;
   align-items: center;
