@@ -1,21 +1,27 @@
 .container {
   display: flex;
+  justify-content: space-between;
 }
 
 #canvas-container {
-  width: 50%;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#controls-container {
+  width: 40%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 #button-and-coordinates {
-  width: 50%;
+  width: 30%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
-  padding-top: 20px;
 }
 
 #download {
@@ -32,18 +38,12 @@ h2 {
   margin-bottom: 10px;
 }
 
-/* Add styles for the slider label */
-#slider-container {
+#slider-container, #dropdown-container {
   text-align: center;
   margin-top: 10px;
 }
 
-#slider-label {
+#slider-label, #dropdown-label {
   display: block;
   margin-bottom: 5px;
-}
-
-/* Add styles for the dropdown container */
-#dropdown-container {
-  margin-top: 20px;
 }
