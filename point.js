@@ -51,6 +51,6 @@ export class Point {
       const y = (1 - t) * pt1.y + t * pt2.y;
       return new Point(x, y);
     }
-  }
+}
   
   
