@@ -35,12 +35,12 @@ function draw() {
       fill(255, 0, 0, 100);
     }
     ellipse(dot.x, dot.y, 40);
-    waypoints.push(Point(dot.x, dot.y, counter))
+    waypoints.push(Point(dot.x, dot.y, counter));
     if(waypoints.length > 3){
-      pathGenerated = catmullRom(waypoints);
+      pathGenerated = catmullRom(waypoints, 20);
     }
     for(let Point of pathGenerated){
-      fill(255, 204, 0);
+      fill(yellow);
       ellipse(Point.x, Point.y, 7.5);
     }
     counter++;
