@@ -9,7 +9,7 @@ let selectedDot = null;
 let draggedPointIndex = -1;
 let offsetX = 0;
 let offsetY = 0;
-let numPoints = 5; // Set a default value for numPoints
+let numPoints = 15; // Set a default value for numPoints
 let numPointsSlider; // Declare a global variable for the slider
 
 function preload() {
