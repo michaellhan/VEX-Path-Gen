@@ -73,8 +73,6 @@ function draw() {
     dots[draggedPointIndex].y = mouseY + offsetY;
   }
 
-  updatePathGenMethod();
-
   // Convert dots array into waypoints array with Point objects
   waypoints = dots.map(dot => new Point(dot.x, dot.y, dots.indexOf(dot)));
 
@@ -92,7 +90,8 @@ function draw() {
     lastGhostPoint = (secondToLast.multiply(2)).subtract(last);
     waypoints.push(lastGhostPoint)
 
-    pathGenerated = catmullRom(waypoints, numPoints);
+    // Update the path generation method based on the dropdown selection
+    updatePathGenMethod();
 
     // Draw the generated path
     noFill();
@@ -104,6 +103,7 @@ function draw() {
     }
     endShape();
   }
+
 
   // Drawing existing dots
   for (let dot of dots) {
