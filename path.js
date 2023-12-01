@@ -1,3 +1,30 @@
+function deCasteljau(path, t) {
+    if (path.length === 1) {
+      return path;
+    }
+  
+    for (let i = 0; i < path.length - 1; i++) {
+      const nextPoint = Point.lerp(path[i], path[i + 1], t);
+      path[i] = nextPoint;
+    }
+  
+    path.pop();
+    return deCasteljau(path, t);
+  }
+  
+  function injection(path, numPoints) {
+    const newPath = [];
+  
+    for (let i = 0; i <= numPoints; i++) {
+      const t = i / numPoints;
+      const addPoint = deCasteljau([...path], t)[0];
+      addPoint.index = i;
+      newPath.push(addPoint);
+    }
+  
+    return newPath;
+  }
+
 function findPoint(p0, p1, p2, p3, t, scale) {
     const c0 = p1;
     const c1 = p0.multiply(-scale).add(p2.multiply(scale));
