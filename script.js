@@ -35,15 +35,10 @@ function draw() {
       fill(255, 0, 0, 100);
     }
     ellipse(dot.x, dot.y, 40);
-    waypoints.push(Point(dot.x, dot.y, counter));
-    if(waypoints.length > 3){
-      pathGenerated = catmullRom(waypoints, 20);
-    }
     for(let Point of pathGenerated){
-      fill(yellow);
+      fill(255, 0, 0, 200);
       ellipse(Point.x, Point.y, 7.5);
     }
-    counter++;
   }
   
   if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
@@ -72,6 +67,11 @@ function mouseClicked() {
       const x = (mouseX - width / 2) / (width / 2) * 72;
       const y = -(mouseY - height / 2) / (height / 2) * 72;
       dots.push({x: mouseX, y: mouseY, displayX: Math.round(x), displayY: Math.round(y)}); // Add the dot to the array
+      waypoints.push(Point(dot.x, dot.y, counter));
+      if(waypoints.length > 3){
+        pathGenerated = catmullRom(waypoints, 20);
+      }
+      counter++;
       dotsElement.innerHTML += `<li>(${Math.round(x)}, ${Math.round(y)})</li>`;
     }
   }
