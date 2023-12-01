@@ -24,9 +24,13 @@ function draw() {
   for (let dot of dots) {
     ellipse(dot.x, dot.y, 40); // Make each circle 4 times the size
   }
-  const x = (mouseX - width / 2) / (width / 2) * 72;
-  const y = -(mouseY - height / 2) / (height / 2) * 72;
-  coordinatesElement.textContent = `(${Math.round(x)}, ${Math.round(y)})`;
+  if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
+    const x = (mouseX - width / 2) / (width / 2) * 72;
+    const y = -(mouseY - height / 2) / (height / 2) * 72;
+    coordinatesElement.textContent = `(${Math.round(x)}, ${Math.round(y)})`;
+  } else {
+    coordinatesElement.textContent = '';
+  }
 }
 
 function mouseClicked() {
@@ -40,7 +44,7 @@ function mouseClicked() {
       for (let i = dots.length - 1; i >= 0; i--) {
         const dot = dots[i];
         const distance = dist(mouseX, mouseY, dot.x, dot.y);
-        if (distance < 20) { // If the click is within the circle
+        if (distance < 40) { // If the click is within the circle
           dots.splice(i, 1); // Remove the dot from the array
           dotsElement.removeChild(dotsElement.childNodes[i]);
           break;

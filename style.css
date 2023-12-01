@@ -17,3 +17,12 @@
 #download {
   margin-bottom: 20px;
 }
+
+#dots {
+  list-style-type: none;
+  padding: 0;
+}
+
+h2 {
+  text-align: center;
+}
