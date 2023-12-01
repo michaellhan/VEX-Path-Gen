@@ -6,8 +6,7 @@ let canvasHeight = 720; // Set the height of the canvas
 let dots = []; // Array to store the coordinates of the dots
 let waypoints = [];
 let pathGenerated = [];
-let selectedDot = null;
-let counter = 0;
+let selectedDot = null; 
 
 function preload() {
   field = loadImage('field.png', () => {
@@ -25,9 +24,16 @@ function setup() {
   coordinatesElement = document.getElementById('coordinates');
   dotsElement = document.getElementById('dots');
 }
-
 function draw() {
   background(field);
+
+  // Draw the path
+  fill(255, 204, 0);
+  for (let point of pathGenerated) {
+    ellipse(point.x, point.y, 5);
+  }
+
+  // Draw the dots
   for (let dot of dots) {
     if (dot === selectedDot) {
       fill(255, 0, 0, 200); // Darken the selected dot
@@ -35,12 +41,8 @@ function draw() {
       fill(255, 0, 0, 100);
     }
     ellipse(dot.x, dot.y, 40);
-    for(let point of pathGenerated){
-      fill(255, 0, 0, 200);
-      ellipse(point.x, point.y, 7.5);
-    }
   }
-  
+
   if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
     const x = (mouseX - width / 2) / (width / 2) * 72;
     const y = -(mouseY - height / 2) / (height / 2) * 72;
@@ -49,7 +51,6 @@ function draw() {
     coordinatesElement.textContent = '(?, ?)';
   }
 }
-
 function mouseClicked() {
   if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
     for (let dot of dots) {
@@ -69,9 +70,8 @@ function mouseClicked() {
       dots.push({x: mouseX, y: mouseY, displayX: Math.round(x), displayY: Math.round(y)}); // Add the dot to the array
       waypoints.push(Point(dot.x, dot.y, counter));
       if(waypoints.length > 3){
-        pathGenerated = catmullRom(waypoints, 20);
+        pathGenerated = catmullRom(waypoints, 5);
       }
-      counter++;
       dotsElement.innerHTML += `<li>(${Math.round(x)}, ${Math.round(y)})</li>`;
     }
   }
