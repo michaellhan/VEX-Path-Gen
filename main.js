@@ -1,5 +1,3 @@
-import { Point } from './point.js';
-
 let field;
 let coordinatesElement;
 let dotsElement;
