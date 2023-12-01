@@ -12,7 +12,7 @@ let offsetY = 0;
 let numPoints = 15; // Set a default value for numPoints
 let numPointsSlider; // Declare a global variable for the slider
 let pathGenMethodDropdown;
-let selectedMethod = pathGenMethodDropdown.value;
+let selectedMethod = updatePathGenMethod();
 
 
 function preload() {
@@ -74,7 +74,7 @@ function draw() {
   waypoints = dots.map(dot => new Point(dot.x, dot.y, dots.indexOf(dot)));
 
   const numPoints = numPointsSlider.value();
-  updatePathGenMethod()
+  
   if (selectedMethod === 'catmull-rom') {
       // Check if waypoints array has more than 1 points
     if (waypoints.length > 1) {
@@ -99,17 +99,17 @@ function draw() {
       endShape();
     }
   } else if (selectedMethod === 'cubic-spline') {
-    if (waypoints.length > 4 && (waypoints.length % 3) === 1) {
-      pathGenerated = cubicSpline2(waypoints, 2, 30);
-      noFill();
-      beginShape();
-      for (let i = 0; i < pathGenerated.length - 1; i++) {
-        stroke(0, 255, 0); // Set path color
-        strokeWeight(2); // Set path stroke weight
-        line(pathGenerated[i].x, pathGenerated[i].y, pathGenerated[i + 1].x, pathGenerated[i + 1].y);
+      if (waypoints.length > 4 && (waypoints.length % 3) === 1) {
+        pathGenerated = cubicSpline2(waypoints, 2, 30);
+        noFill();
+        beginShape();
+        for (let i = 0; i < pathGenerated.length - 1; i++) {
+          stroke(0, 255, 0); // Set path color
+          strokeWeight(2); // Set path stroke weight
+          line(pathGenerated[i].x, pathGenerated[i].y, pathGenerated[i + 1].x, pathGenerated[i + 1].y);
+        }
+        endShape();
       }
-      endShape();
-    }
   }
     
   
