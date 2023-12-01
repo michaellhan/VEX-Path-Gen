@@ -8,6 +8,10 @@ let waypoints = [];
 let selectedDot = null;
 let counter = 0;
 
+let draggedPointIndex = -1;
+let offsetX = 0;
+let offsetY = 0;
+
 function preload() {
   field = loadImage('field.png', () => {
     const aspectRatio = field.width / field.height;
@@ -23,10 +27,18 @@ function setup() {
   field.resize(canvasWidth, canvasHeight); // Resize the image to fit the canvas
   coordinatesElement = document.getElementById('coordinates');
   dotsElement = document.getElementById('dots');
+  canvas.mousePressed(startDragging);
+  canvas.mouseReleased(stopDragging);
 }
 
 function draw() {
   background(field);
+
+  // Update the position of the dragged point
+  if (draggedPointIndex !== -1) {
+    dots[draggedPointIndex].x = mouseX + offsetX;
+    dots[draggedPointIndex].y = mouseY + offsetY;
+  }
 
   // Convert dots array into waypoints array with Point objects
   waypoints = dots.map(dot => new Point(dot.x, dot.y, dots.indexOf(dot)));
@@ -56,15 +68,6 @@ function draw() {
     }
     ellipse(dot.x, dot.y, 40);
     counter++;
-  }
-
-  // Display coordinates
-  if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
-    const x = (mouseX - width / 2) / (width / 2) * 72;
-    const y = -(mouseY - height / 2) / (height / 2) * 72;
-    coordinatesElement.textContent = `(${Math.round(x)}, ${Math.round(y)})`;
-  } else {
-    coordinatesElement.textContent = '(?, ?)';
   }
 
   // Display coordinates
@@ -109,6 +112,22 @@ function keyPressed() {
       selectedDot = null; // Deselect the dot
     }
   }
+}
+
+function startDragging() {
+  for (let i = 0; i < dots.length; i++) {
+    const d = dist(mouseX, mouseY, dots[i].x, dots[i].y);
+    if (d < 20) {
+      draggedPointIndex = i;
+      offsetX = dots[i].x - mouseX;
+      offsetY = dots[i].y - mouseY;
+      break;
+    }
+  }
+}
+
+function stopDragging() {
+  draggedPointIndex = -1;
 }
 
 
