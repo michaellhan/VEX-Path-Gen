@@ -18,11 +18,12 @@
   align-items: center;
 }
 
-#button-and-coordinates {
-  width: 30%;
+#coordinates {
+  width: 25%; /* Decrease the width */
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-right: 50px; /* Add padding to the right */
 }
 
 #slider-container {
