@@ -35,9 +35,9 @@ function draw() {
       fill(255, 0, 0, 100);
     }
     ellipse(dot.x, dot.y, 40);
-    for(let Point of pathGenerated){
+    for(let point of pathGenerated){
       fill(255, 0, 0, 200);
-      ellipse(Point.x, Point.y, 7.5);
+      ellipse(point.x, point.y, 7.5);
     }
   }
   
