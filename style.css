@@ -1,0 +1,31 @@
+canvas {
+  display: block;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+  text-align: left;
+  padding-right: 20%;
+}
+
+#output {
+  white-space: pre-line;
+}
+
+#title {
+  color: #333333;
+  font-family: CerebriSans-Bold, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  font-size: 2em;
+  font-weight: 100;
+  text-align: left;
+  color: rgb(27, 84, 84);
+  
+  /* font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+  font-size: 60px;
+  padding: 10px;
+  /* display: block; */
+}
