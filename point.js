@@ -1,4 +1,4 @@
-class Point {
+export class Point {
     constructor(x, y, index) {
       this.x = x;
       this.y = y;

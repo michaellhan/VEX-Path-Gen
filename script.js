@@ -1,3 +1,5 @@
+import { Point } from './point.js';
+
 let field;
 let coordinatesElement;
 let dotsElement;
@@ -11,7 +13,6 @@ let offsetX = 0;
 let offsetY = 0;
 let numPoints = 15; // Set a default value for numPoints
 let numPointsSlider; // Declare a global variable for the slider
-const Point = require('./point.js');
 
 function preload() {
   field = loadImage('field.png', () => {
