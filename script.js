@@ -29,6 +29,9 @@ function setup() {
   dotsElement = document.getElementById('dots');
   canvas.mousePressed(startDragging);
   canvas.mouseReleased(stopDragging);
+  numPointsSlider = createSlider(3, 20, 5); // min, max, default value
+  numPointsSlider.position(width + 20, height - 120); // Adjust position as needed
+  numPointsSlider.style('width', '100px'); // Adjust the width of the slider
 }
 
 function draw() {
@@ -42,6 +45,8 @@ function draw() {
 
   // Convert dots array into waypoints array with Point objects
   waypoints = dots.map(dot => new Point(dot.x, dot.y, dots.indexOf(dot)));
+
+  const numPoints = numPointsSlider.value();
 
   // Check if waypoints array has more than 3 points
   if (waypoints.length > 3) {
