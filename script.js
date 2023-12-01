@@ -9,7 +9,12 @@ let selectedDot = null;
 let counter = 0;
 
 function preload() {
-  field = loadImage('field.png');
+  field = loadImage('field.png', () => {
+    const aspectRatio = field.width / field.height;
+    canvasHeight = windowHeight; // Set canvas height to the user's screen height
+    canvasWidth = canvasHeight * aspectRatio; // Calculate canvas width based on aspect ratio
+    field.resize(canvasWidth, canvasHeight); // Resize the image to fit the canvas
+  });
 }
 
 function setup() {
