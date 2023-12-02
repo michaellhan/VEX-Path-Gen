@@ -87,8 +87,8 @@ function draw() {
 
   const numPoints = numPointsSlider.value();
 
-  // Check if waypoints array has more than 1 points
-  if (waypoints.length > 1) {
+  // Check if waypoints array has points
+  if (waypoints.length >= 1) {
     first = waypoints[0];
     second = waypoints[1];
     last = waypoints[waypoints.length - 1];
