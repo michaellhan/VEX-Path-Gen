@@ -18,6 +18,14 @@
   align-items: center;
 }
 
+#mouse-coordinates {
+  width: 25%; /* Decrease the width */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-right: 120px; /* Add padding to the right */
+}
+
 #dot-coordinates {
   width: 25%; /* Decrease the width */
   display: flex;
