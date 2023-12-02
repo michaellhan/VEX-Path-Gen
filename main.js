@@ -42,6 +42,20 @@ function setup() {
 function updatePathGenMethod() {
   let selectedMethod = pathGenMethodDropdown.value;
   if (selectedMethod === 'catmull-rom') {
+    if (waypoints.length > 1) {
+      first = waypoints[0];
+      second = waypoints[1];
+      last = waypoints[waypoints.length - 1];
+      secondToLast = waypoints[waypoints.length - 2];
+      firstGhostPoint = (first.multiply(2)).subtract(second);
+      waypoints.unshift(firstGhostPoint);
+  
+      lastGhostPoint = (secondToLast.multiply(2)).subtract(last);
+      waypoints.push(lastGhostPoint)
+  
+      // Update the path generation method based on the dropdown selection
+      
+    }
     pathGenerated = catmullRom(waypoints, numPoints);
 
     noFill();
@@ -54,7 +68,6 @@ function updatePathGenMethod() {
     endShape();
   } else if (selectedMethod === 'cubic-spline') {
     // Find the largest number n that is 1 mod 3 and less than or equal to the number of points
-    waypoints = waypoints.slice(1, waypoints.length - 1);
     let n = waypoints.length;
     while ((n % 3) !== 1 && n > 3) {
       n--;
@@ -106,23 +119,10 @@ function draw() {
   // Convert dots array into waypoints array with Point objects
   waypoints = dots.map(dot => new Point(dot.x, dot.y, dots.indexOf(dot)));
 
-  const numPoints = numPointsSlider.value();
+  numPoints = numPointsSlider.value();
 
   // Check if waypoints array has more than 1 points
-  if (waypoints.length > 1) {
-    first = waypoints[0];
-    second = waypoints[1];
-    last = waypoints[waypoints.length - 1];
-    secondToLast = waypoints[waypoints.length - 2];
-    firstGhostPoint = (first.multiply(2)).subtract(second);
-    waypoints.unshift(firstGhostPoint);
-
-    lastGhostPoint = (secondToLast.multiply(2)).subtract(last);
-    waypoints.push(lastGhostPoint)
-
-    // Update the path generation method based on the dropdown selection
-    updatePathGenMethod();
-  }
+  updatePathGenMethod();
 
 
   // Drawing existing dots
