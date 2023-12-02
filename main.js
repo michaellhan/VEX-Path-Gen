@@ -51,7 +51,7 @@ function updatePathGenMethod() {
     }
     // Use the first n points to generate the path
     if (n >= 3) {
-      pathGenerated = cubicSpline2(waypoints.slice(0, n), 2, 30);
+      pathGenerated = cubicSpline2(waypoints.slice(1, n), 2, 30);
     } else {
       console.log("Not enough points for cubic spline path generation");
     }
