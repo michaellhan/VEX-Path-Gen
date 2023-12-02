@@ -45,7 +45,13 @@ function updatePathGenMethod() {
   if (selectedMethod === 'catmull-rom') {
     pathGenerated = catmullRom(waypoints, numPoints);
   } else if (selectedMethod === 'cubic-spline') {
-    pathGenerated = cubicSpline2(waypoints, 2, 30);
+    // Find the largest number n that is 1 mod 3 and less than or equal to the number of points
+    let n = waypoints.length;
+    while (n % 3 !== 1) {
+      n--;
+    }
+    // Use the first n points to generate the path
+    pathGenerated = cubicSpline2(waypoints.slice(0, n), 2, 30);
   }
 }
 
