@@ -54,7 +54,7 @@ function updatePathGenMethod() {
     endShape();
   } else if (selectedMethod === 'cubic-spline') {
     // Find the largest number n that is 1 mod 3 and less than or equal to the number of points
-    waypoints = waypoints.slice(1, n);
+    waypoints = waypoints.slice(1, waypoints.length - 1);
     let n = waypoints.length;
     while ((n % 3) !== 1 && n > 3) {
       n--;
@@ -69,7 +69,7 @@ function updatePathGenMethod() {
         strokeWeight(2); // Set path stroke weight
         line(pathGenerated[i].x, pathGenerated[i].y, pathGenerated[i + 1].x, pathGenerated[i + 1].y);
       }
-  endShape();
+      endShape();
 
     } else {
       console.log("Not enough points for cubic spline path generation");
@@ -122,8 +122,6 @@ function draw() {
 
     // Update the path generation method based on the dropdown selection
     updatePathGenMethod();
-
-    
   }
 
 
