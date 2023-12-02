@@ -17,7 +17,7 @@ function injection(path, numPoints) {
 
   for (let i = 0; i <= numPoints; i++) {
     const t = i / numPoints;
-    const addPoint = deCasteljau([...path], t)[0];
+    const addPoint = deCasteljau(path, t)[0];
     addPoint.index = i;
     newPath.push(addPoint);
   }
