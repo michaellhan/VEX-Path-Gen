@@ -39,7 +39,6 @@ function setup() {
   pathGenMethodDropdown = document.getElementById('path-gen-method');
   pathGenMethodDropdown.addEventListener('change', updatePathGenMethod);
 }
-
 function updatePathGenMethod() {
   let selectedMethod = pathGenMethodDropdown.value;
   if (selectedMethod === 'catmull-rom') {
@@ -47,11 +46,15 @@ function updatePathGenMethod() {
   } else if (selectedMethod === 'cubic-spline') {
     // Find the largest number n that is 1 mod 3 and less than or equal to the number of points
     let n = waypoints.length;
-    while (n % 3 !== 1) {
+    while (n % 3 !== 1 && n > 3) {
       n--;
     }
     // Use the first n points to generate the path
-    pathGenerated = cubicSpline2(waypoints.slice(0, n), 2, 30);
+    if (n >= 3) {
+      pathGenerated = cubicSpline2(waypoints.slice(0, n), 2, 30);
+    } else {
+      console.log("Not enough points for cubic spline path generation");
+    }
   }
 }
 
