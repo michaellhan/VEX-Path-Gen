@@ -43,19 +43,39 @@ function updatePathGenMethod() {
   let selectedMethod = pathGenMethodDropdown.value;
   if (selectedMethod === 'catmull-rom') {
     pathGenerated = catmullRom(waypoints, numPoints);
+
+    noFill();
+    beginShape();
+    for (let i = 0; i < pathGenerated.length - 1; i++) {
+      stroke(0, 255, 0); // Set path color
+      strokeWeight(2); // Set path stroke weight
+      line(pathGenerated[i].x, pathGenerated[i].y, pathGenerated[i + 1].x, pathGenerated[i + 1].y);
+    }
+  endShape();
   } else if (selectedMethod === 'cubic-spline') {
     // Find the largest number n that is 1 mod 3 and less than or equal to the number of points
     let n = waypoints.length;
-    while (n % 3 !== 1 && n > 3) {
+    while ((n % 3) !== 1 && n > 3) {
       n--;
     }
     // Use the first n points to generate the path
     if (n >= 3) {
       pathGenerated = cubicSpline2(waypoints.slice(1, n), 2, 30);
+      noFill();
+      beginShape();
+      for (let i = 1; i < n - 1; i++) {
+        stroke(0, 255, 0); // Set path color
+        strokeWeight(2); // Set path stroke weight
+        line(pathGenerated[i].x, pathGenerated[i].y, pathGenerated[i + 1].x, pathGenerated[i + 1].y);
+      }
+  endShape();
+
     } else {
       console.log("Not enough points for cubic spline path generation");
     }
   }
+  // Draw the generated path
+  
 }
 
 function positionSlider() {
@@ -102,15 +122,7 @@ function draw() {
     // Update the path generation method based on the dropdown selection
     updatePathGenMethod();
 
-    // Draw the generated path
-    noFill();
-    beginShape();
-    for (let i = 0; i < pathGenerated.length - 1; i++) {
-      stroke(0, 255, 0); // Set path color
-      strokeWeight(2); // Set path stroke weight
-      line(pathGenerated[i].x, pathGenerated[i].y, pathGenerated[i + 1].x, pathGenerated[i + 1].y);
-    }
-    endShape();
+    
   }
 
 
