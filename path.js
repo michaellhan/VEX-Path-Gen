@@ -3,13 +3,14 @@ function deCasteljau(path, t) {
     return path;
   }
 
+  const newPath = [];
+
   for (let i = 0; i < path.length - 1; i++) {
     const nextPoint = Point.lerp(path[i], path[i + 1], t);
-    path[i] = nextPoint;
+    newPath.push(nextPoint);
   }
 
-  path.pop();
-  return deCasteljau(path, t);
+  return deCasteljau(newPath, t);
 }
 
 function injection(path, numPoints) {
