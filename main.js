@@ -51,19 +51,20 @@ function updatePathGenMethod() {
       strokeWeight(2); // Set path stroke weight
       line(pathGenerated[i].x, pathGenerated[i].y, pathGenerated[i + 1].x, pathGenerated[i + 1].y);
     }
-  endShape();
+    endShape();
   } else if (selectedMethod === 'cubic-spline') {
     // Find the largest number n that is 1 mod 3 and less than or equal to the number of points
+    waypoints = waypoints.slice(1, n);
     let n = waypoints.length;
     while ((n % 3) !== 1 && n > 3) {
       n--;
     }
     // Use the first n points to generate the path
     if (n >= 3) {
-      pathGenerated = cubicSpline2(waypoints.slice(1, n), 2, 30);
+      pathGenerated = cubicSpline2(waypoints, 2, 30);
       noFill();
       beginShape();
-      for (let i = 1; i < n - 1; i++) {
+      for (let i = 0; i < n - 1; i++) {
         stroke(0, 255, 0); // Set path color
         strokeWeight(2); // Set path stroke weight
         line(pathGenerated[i].x, pathGenerated[i].y, pathGenerated[i + 1].x, pathGenerated[i + 1].y);
