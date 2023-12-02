@@ -42,54 +42,20 @@ function setup() {
 function updatePathGenMethod() {
   let selectedMethod = pathGenMethodDropdown.value;
   if (selectedMethod === 'catmull-rom') {
-    if (waypoints.length > 1) {
-      first = waypoints[0];
-      second = waypoints[1];
-      last = waypoints[waypoints.length - 1];
-      secondToLast = waypoints[waypoints.length - 2];
-      firstGhostPoint = (first.multiply(2)).subtract(second);
-      waypoints.unshift(firstGhostPoint);
-  
-      lastGhostPoint = (secondToLast.multiply(2)).subtract(last);
-      waypoints.push(lastGhostPoint)
-  
-      // Update the path generation method based on the dropdown selection
-      
-    }
     pathGenerated = catmullRom(waypoints, numPoints);
-
-    noFill();
-    beginShape();
-    for (let i = 0; i < pathGenerated.length - 1; i++) {
-      stroke(0, 255, 0); // Set path color
-      strokeWeight(2); // Set path stroke weight
-      line(pathGenerated[i].x, pathGenerated[i].y, pathGenerated[i + 1].x, pathGenerated[i + 1].y);
-    }
-    endShape();
   } else if (selectedMethod === 'cubic-spline') {
     // Find the largest number n that is 1 mod 3 and less than or equal to the number of points
     let n = waypoints.length;
-    while ((n % 3) !== 1 && n > 3) {
+    while (n % 3 !== 1 && n > 3) {
       n--;
     }
     // Use the first n points to generate the path
     if (n >= 3) {
-      pathGenerated = cubicSpline2(waypoints, 2, 30);
-      noFill();
-      beginShape();
-      for (let i = 0; i < n - 1; i++) {
-        stroke(0, 255, 0); // Set path color
-        strokeWeight(2); // Set path stroke weight
-        line(pathGenerated[i].x, pathGenerated[i].y, pathGenerated[i + 1].x, pathGenerated[i + 1].y);
-      }
-      endShape();
-
+      pathGenerated = cubicSpline2(waypoints.slice(1, n), 2, 30);
     } else {
       console.log("Not enough points for cubic spline path generation");
     }
   }
-  // Draw the generated path
-  
 }
 
 function positionSlider() {
@@ -119,10 +85,33 @@ function draw() {
   // Convert dots array into waypoints array with Point objects
   waypoints = dots.map(dot => new Point(dot.x, dot.y, dots.indexOf(dot)));
 
-  numPoints = numPointsSlider.value();
+  const numPoints = numPointsSlider.value();
 
   // Check if waypoints array has more than 1 points
-  updatePathGenMethod();
+  if (waypoints.length > 1) {
+    first = waypoints[0];
+    second = waypoints[1];
+    last = waypoints[waypoints.length - 1];
+    secondToLast = waypoints[waypoints.length - 2];
+    firstGhostPoint = (first.multiply(2)).subtract(second);
+    waypoints.unshift(firstGhostPoint);
+
+    lastGhostPoint = (secondToLast.multiply(2)).subtract(last);
+    waypoints.push(lastGhostPoint)
+
+    // Update the path generation method based on the dropdown selection
+    updatePathGenMethod();
+
+    // Draw the generated path
+    noFill();
+    beginShape();
+    for (let i = 0; i < pathGenerated.length - 1; i++) {
+      stroke(0, 255, 0); // Set path color
+      strokeWeight(2); // Set path stroke weight
+      line(pathGenerated[i].x, pathGenerated[i].y, pathGenerated[i + 1].x, pathGenerated[i + 1].y);
+    }
+    endShape();
+  }
 
 
   // Drawing existing dots
