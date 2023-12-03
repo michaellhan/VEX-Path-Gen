@@ -63,7 +63,7 @@ function positionSlider() {
 function downloadPath() {
   let data = "";
   for (let point of pathGenerated) {
-    data += `${point.x},${point.y}\n`;
+    data += `${point.x}, ${point.y}\n`;
   }
   let blob = new Blob([data], {type: "text/plain"});
   let url = URL.createObjectURL(blob);
