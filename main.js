@@ -109,7 +109,6 @@ function draw() {
       console.log("Not enough points for cubic spline path generation");
     }
   }
-  
 
     // Draw the generated path
     noFill();
@@ -120,9 +119,7 @@ function draw() {
       line(pathGenerated[i].x, pathGenerated[i].y, pathGenerated[i + 1].x, pathGenerated[i + 1].y);
     }
     endShape();
-  }
-
-
+  
   // Drawing existing dots
   for (let dot of dots) {
     if (dot === selectedDot) {
