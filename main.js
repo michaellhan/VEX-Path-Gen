@@ -74,7 +74,6 @@ function draw() {
 
   const numPoints = numPointsSlider.value();
 
-  
   // Update the path generation method based on the dropdown selection
   updatePathGenMethod();
 
@@ -108,7 +107,7 @@ function draw() {
   else if (selectedMethod === 'cubic-spline') {
     // Find the largest number n that is 1 mod 3 and less than or equal to the number of points
     let n = waypoints.length;
-    while ((n % 3) !== 1) {
+    while ((n % 3) != 1) {
       n--;
     }
     // Use the first n points to generate the path
@@ -117,7 +116,7 @@ function draw() {
       // Draw the generated path
       noFill();
       beginShape();
-      for (let i = 0; i < pathGenerated.length - 1; i++) {
+      for (let i = 0; i < n - 1; i++) {
         stroke(0, 255, 0); // Set path color
         strokeWeight(2); // Set path stroke weight
         line(pathGenerated[i].x, pathGenerated[i].y, pathGenerated[i + 1].x, pathGenerated[i + 1].y);
@@ -128,7 +127,6 @@ function draw() {
     }
   }
 
-  
   // Drawing existing dots
   for (let dot of dots) {
     if (dot === selectedDot) {
