@@ -13,7 +13,7 @@ let numPoints = 15; // Set a default value for numPoints
 let numPointsSlider; // Declare a global variable for the slider
 let pathGenerated = [];
 let pathGenMethodDropdown;
-
+let selectedMethod;
 
 function preload() {
   field = loadImage('field.png', () => {
@@ -41,8 +41,6 @@ function setup() {
   pathGenMethodDropdown = document.getElementById('path-gen-method');
   pathGenMethodDropdown.addEventListener('change', updatePathGenMethod);
 }
-
-let selectedMethod = updatePathGenMethod();
 
 function updatePathGenMethod() {
   selectedMethod = pathGenMethodDropdown.value;
