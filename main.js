@@ -13,7 +13,7 @@ let numPoints = 15; // Set a default value for numPoints
 let numPointsSlider; // Declare a global variable for the slider
 let pathGenerated = [];
 let pathGenMethodDropdown;
-let selectedMethod;
+
 
 function preload() {
   field = loadImage('field.png', () => {
@@ -41,6 +41,9 @@ function setup() {
   pathGenMethodDropdown = document.getElementById('path-gen-method');
   pathGenMethodDropdown.addEventListener('change', updatePathGenMethod);
 }
+
+let selectedMethod = updatePathGenMethod();
+
 function updatePathGenMethod() {
   selectedMethod = pathGenMethodDropdown.value;
 }
@@ -112,11 +115,11 @@ function draw() {
     }
     // Use the first n points to generate the path
     if (n > 3) {
-      pathGenerated = cubicSpline2(waypoints.slice(0, n + 1), 2, 30);
+      pathGenerated = cubicSpline2(waypoints.slice(0, n), 2, 30);
       // Draw the generated path
       noFill();
       beginShape();
-      for (let i = 0; i < n - 1; i++) {
+      for (let i = 0; i < pathGenerated.length - 1; i++) {
         stroke(0, 255, 0); // Set path color
         strokeWeight(2); // Set path stroke weight
         line(pathGenerated[i].x, pathGenerated[i].y, pathGenerated[i + 1].x, pathGenerated[i + 1].y);
