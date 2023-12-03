@@ -11,6 +11,7 @@ let offsetX = 0;
 let offsetY = 0;
 let numPoints = 15; // Set a default value for numPoints
 let numPointsSlider; // Declare a global variable for the slider
+let pathGenerated = [];
 let pathGenMethodDropdown;
 let selectedMethod;
 
