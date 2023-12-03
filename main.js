@@ -13,6 +13,7 @@ let numPoints = 15; // Set a default value for numPoints
 let numPointsSlider; // Declare a global variable for the slider
 let pathGenerated = [];
 let pathGenMethodDropdown;
+let downloadButton;
 let selectedMethod;
 
 function preload() {
@@ -40,6 +41,8 @@ function setup() {
   positionSlider();
   pathGenMethodDropdown = document.getElementById('path-gen-method');
   pathGenMethodDropdown.addEventListener('change', updatePathGenMethod);
+  downloadButton = document.getElementById('download');
+  downloadButton.addEventListener('click', downloadPath);
 }
 
 function updatePathGenMethod() {
@@ -55,6 +58,22 @@ function positionSlider() {
   const labelY = 70; // Y position for the label above the slider
   const sliderLabel = select('#slider-label');
   sliderLabel.position(labelX, labelY); // Adjust position as needed
+}
+
+function downloadPath() {
+  let data = "";
+  for (let point of pathGenerated) {
+    data += `${point.x},${point.y}\n`;
+  }
+  let blob = new Blob([data], {type: "text/plain"});
+  let url = URL.createObjectURL(blob);
+  let a = document.createElement("a");
+  a.href = url;
+  a.download = "path.txt";
+  a.style.display = "none";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }
 
 function updateNumPoints() {
