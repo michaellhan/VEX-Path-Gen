@@ -65,15 +65,16 @@ function downloadPath() {
   for (let point of pathGenerated) {
     data += `${point.x}, ${point.y}\n`;
   }
-  let blob = new Blob([data], {type: "text/plain"});
+  let blob = new Blob([data], {type: "text/plain;charset=utf-8"});
   let url = URL.createObjectURL(blob);
   let a = document.createElement("a");
   a.href = url;
-  a.download = "path.txt";
+  a.download = "path.txt"; // This is the default filename
   a.style.display = "none";
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
+  window.URL.revokeObjectURL(url);
 }
 
 function updateNumPoints() {
