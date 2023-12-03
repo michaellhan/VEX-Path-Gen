@@ -12,6 +12,7 @@ let offsetY = 0;
 let numPoints = 15; // Set a default value for numPoints
 let numPointsSlider; // Declare a global variable for the slider
 let pathGenMethodDropdown;
+let selectedMethod;
 
 function preload() {
   field = loadImage('field.png', () => {
@@ -40,22 +41,7 @@ function setup() {
   pathGenMethodDropdown.addEventListener('change', updatePathGenMethod);
 }
 function updatePathGenMethod() {
-  let selectedMethod = pathGenMethodDropdown.value;
-  if (selectedMethod === 'catmull-rom') {
-    pathGenerated = catmullRom(waypoints, numPoints);
-  } else if (selectedMethod === 'cubic-spline') {
-    // Find the largest number n that is 1 mod 3 and less than or equal to the number of points
-    let n = waypoints.length;
-    while (n % 3 !== 1 && n > 3) {
-      n--;
-    }
-    // Use the first n points to generate the path
-    if (n >= 3) {
-      pathGenerated = cubicSpline2(waypoints.slice(1, n), 2, 30);
-    } else {
-      console.log("Not enough points for cubic spline path generation");
-    }
-  }
+  selectedMethod = pathGenMethodDropdown.value;
 }
 
 function positionSlider() {
@@ -87,20 +73,43 @@ function draw() {
 
   const numPoints = numPointsSlider.value();
 
-  // Check if waypoints array has more than 1 points
-  if (waypoints.length > 1) {
-    first = waypoints[0];
-    second = waypoints[1];
-    last = waypoints[waypoints.length - 1];
-    secondToLast = waypoints[waypoints.length - 2];
-    firstGhostPoint = (first.multiply(2)).subtract(second);
-    waypoints.unshift(firstGhostPoint);
+  
+  // Update the path generation method based on the dropdown selection
+  updatePathGenMethod();
 
-    lastGhostPoint = (secondToLast.multiply(2)).subtract(last);
-    waypoints.push(lastGhostPoint)
+  if (selectedMethod === 'catmull-rom') {
+    // Check if waypoints array has more than 1 points
+    if (waypoints.length > 1) {
+      first = waypoints[0];
+      second = waypoints[1];
+      last = waypoints[waypoints.length - 1];
+      secondToLast = waypoints[waypoints.length - 2];
+      firstGhostPoint = (first.multiply(2)).subtract(second);
+      waypoints.unshift(firstGhostPoint);
+  
+      lastGhostPoint = (secondToLast.multiply(2)).subtract(last);
+      waypoints.push(lastGhostPoint)
 
-    // Update the path generation method based on the dropdown selection
-    updatePathGenMethod();
+      // Path Generation
+      pathGenerated = catmullRom(waypoints, numPoints);
+
+    }
+    
+  } 
+  else if (selectedMethod === 'cubic-spline') {
+    // Find the largest number n that is 1 mod 3 and less than or equal to the number of points
+    let n = waypoints.length;
+    while ((n % 3) !== 1 && n > 3) {
+      n--;
+    }
+    // Use the first n points to generate the path
+    if (n >= 3) {
+      pathGenerated = cubicSpline2(waypoints.slice(0, n + 1), 2, 30);
+    } else {
+      console.log("Not enough points for cubic spline path generation");
+    }
+  }
+  
 
     // Draw the generated path
     noFill();
