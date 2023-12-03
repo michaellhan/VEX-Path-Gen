@@ -93,7 +93,15 @@ function draw() {
 
       // Path Generation
       pathGenerated = catmullRom(waypoints, numPoints);
-
+      // Draw the generated path
+       noFill();
+      beginShape();
+      for (let i = 0; i < pathGenerated.length - 1; i++) {
+        stroke(0, 255, 0); // Set path color
+        strokeWeight(2); // Set path stroke weight
+        line(pathGenerated[i].x, pathGenerated[i].y, pathGenerated[i + 1].x, pathGenerated[i + 1].y);
+      }
+      endShape();
     }
     
   } 
@@ -106,20 +114,20 @@ function draw() {
     // Use the first n points to generate the path
     if (n >= 3) {
       pathGenerated = cubicSpline2(waypoints.slice(0, n + 1), 2, 30);
+      // Draw the generated path
+      noFill();
+      beginShape();
+      for (let i = 0; i < pathGenerated.length - 1; i++) {
+        stroke(0, 255, 0); // Set path color
+        strokeWeight(2); // Set path stroke weight
+        line(pathGenerated[i].x, pathGenerated[i].y, pathGenerated[i + 1].x, pathGenerated[i + 1].y);
+      }
+      endShape();
     } else {
       console.log("Not enough points for cubic spline path generation");
     }
   }
 
-    // Draw the generated path
-    noFill();
-    beginShape();
-    for (let i = 0; i < pathGenerated.length - 1; i++) {
-      stroke(0, 255, 0); // Set path color
-      strokeWeight(2); // Set path stroke weight
-      line(pathGenerated[i].x, pathGenerated[i].y, pathGenerated[i + 1].x, pathGenerated[i + 1].y);
-    }
-    endShape();
   
   // Drawing existing dots
   for (let dot of dots) {
