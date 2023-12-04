@@ -91,7 +91,7 @@ function draw() {
     let newX = mouseX + offsetX;
     let newY = mouseY + offsetY;
 
-    const buffer = 20; // Set a buffer distance from the edge of the field
+    const buffer = 5; // Set a buffer distance from the edge of the field
 
     // Check if the new position would be outside the field
     if (newX < buffer) newX = buffer;
