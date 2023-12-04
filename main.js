@@ -19,7 +19,7 @@ let selectedMethod;
 function preload() {
   field = loadImage('field.png', () => {
     const aspectRatio = field.width / field.height;
-    canvasHeight = (windowHeight - 100) * 0.95; // Set canvas height to the user's screen height
+    canvasHeight = windowHeight - 120; // Set canvas height to the user's screen height
     canvasWidth = canvasHeight * aspectRatio; // Calculate canvas width based on aspect ratio
     field.resize(canvasWidth, canvasHeight); // Resize the image to fit the canvas
   });
@@ -88,8 +88,17 @@ function draw() {
 
   // Update the position of the dragged point
   if (draggedPointIndex !== -1) {
-    dots[draggedPointIndex].x = mouseX + offsetX;
-    dots[draggedPointIndex].y = mouseY + offsetY;
+    let newX = mouseX + offsetX;
+    let newY = mouseY + offsetY;
+
+    // Check if the new position would be outside the field
+    if (newX < 0) newX = 0;
+    if (newX > canvasWidth) newX = canvasWidth;
+    if (newY < 0) newY = 0;
+    if (newY > canvasHeight) newY = canvasHeight;
+
+    dots[draggedPointIndex].x = newX;
+    dots[draggedPointIndex].y = newY;
   }
 
   // Convert dots array into waypoints array with Point objects
