@@ -19,7 +19,7 @@ let selectedMethod;
 function preload() {
   field = loadImage('field.png', () => {
     const aspectRatio = field.width / field.height;
-    canvasHeight = windowHeight - 120; // Set canvas height to the user's screen height
+    canvasHeight = windowHeight - 100; // Set canvas height to the user's screen height
     canvasWidth = canvasHeight * aspectRatio; // Calculate canvas width based on aspect ratio
     field.resize(canvasWidth, canvasHeight); // Resize the image to fit the canvas
   });
@@ -180,6 +180,10 @@ function draw() {
 }
 
 function mouseClicked() {
+  if (draggedPointIndex !== -1) {
+    return;
+  }
+
   if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
     for (let dot of dots) {
       const distance = dist(mouseX, mouseY, dot.x, dot.y);
