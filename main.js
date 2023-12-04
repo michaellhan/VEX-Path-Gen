@@ -91,11 +91,13 @@ function draw() {
     let newX = mouseX + offsetX;
     let newY = mouseY + offsetY;
 
+    const buffer = 20; // Set a buffer distance from the edge of the field
+
     // Check if the new position would be outside the field
-    if (newX < 0) newX = 0;
-    if (newX > canvasWidth) newX = canvasWidth;
-    if (newY < 0) newY = 0;
-    if (newY > canvasHeight) newY = canvasHeight;
+    if (newX < buffer) newX = buffer;
+    if (newX > canvasWidth - buffer) newX = canvasWidth - buffer;
+    if (newY < buffer) newY = buffer;
+    if (newY > canvasHeight - buffer) newY = canvasHeight - buffer;
 
     dots[draggedPointIndex].x = newX;
     dots[draggedPointIndex].y = newY;
