@@ -88,8 +88,17 @@ function draw() {
 
   // Update the position of the dragged point
   if (draggedPointIndex !== -1) {
-    dots[draggedPointIndex].x = mouseX + offsetX;
-    dots[draggedPointIndex].y = mouseY + offsetY;
+    let newX = mouseX + offsetX;
+    let newY = mouseY + offsetY;
+
+    // Check if the new position would be outside the field
+    if (newX < 0) newX = 0;
+    if (newX > canvasWidth) newX = canvasWidth;
+    if (newY < 0) newY = 0;
+    if (newY > canvasHeight) newY = canvasHeight;
+
+    dots[draggedPointIndex].x = newX;
+    dots[draggedPointIndex].y = newY;
   }
 
   // Convert dots array into waypoints array with Point objects
@@ -171,11 +180,6 @@ function draw() {
 }
 
 function mouseClicked() {
-  // If a point is being dragged, don't create a new point
-  if (draggedPointIndex !== -1) {
-    return;
-  }
-
   if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
     for (let dot of dots) {
       const distance = dist(mouseX, mouseY, dot.x, dot.y);
