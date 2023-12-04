@@ -171,6 +171,11 @@ function draw() {
 }
 
 function mouseClicked() {
+  // If a point is being dragged, don't create a new point
+  if (draggedPointIndex !== -1) {
+    return;
+  }
+
   if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
     for (let dot of dots) {
       const distance = dist(mouseX, mouseY, dot.x, dot.y);
@@ -211,6 +216,7 @@ function startDragging() {
       draggedPointIndex = i;
       offsetX = dots[i].x - mouseX;
       offsetY = dots[i].y - mouseY;
+      document.body.classList.add('no-select'); // Add the no-select class to the body
       break;
     }
   }
@@ -218,4 +224,5 @@ function startDragging() {
 
 function stopDragging() {
   draggedPointIndex = -1;
+  document.body.classList.remove('no-select'); // Remove the no-select class from the body
 }

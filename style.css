@@ -47,3 +47,7 @@
 h2 {
   margin-bottom: 10px;
 }
+
+.no-select {
+  user-select: none;
+}
