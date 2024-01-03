@@ -69,7 +69,7 @@ function catmullRom(path) {
       const t = i / nu;
       const addPoint = findPoint(path[j], path[j + 1], path[j + 2], path[j + 3], t);
       if (j == (path.length - 4)){
-        if((Point.distance(addPoint, path[path.length - 2])) < 1){
+        if((Point.distance(addPoint, path[path.length - 2])) < 5){
           break;
         }
       }
