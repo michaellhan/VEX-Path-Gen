@@ -37,59 +37,45 @@ function findPoint(p0, p1, p2, p3, t) {
   const t3 = t2 * t;
 
   const newPoint = c0.add(c1.multiply(t)).add(c2.multiply(t2)).add(c3.multiply(t3));
-  const derivative = c1.multiply(1).add(c2.multiply(2 * t)).add(c3.multiply(3 * t2));
-  const speed = derivative.magnitude(); // Calculate the speed as the magnitude of the derivative vector
-  return { point: newPoint, speed: speed };
+  return newPoint;
 }
 
+
+function findDerivative(p0, p1, p2, p3, t) {
+  const c1 = p0.multiply(-0.5).add(p2.multiply(0.5));
+  const c2 = p0.multiply(0.5 * 2).add(p1.multiply(0.5 - 3)).add(p2.multiply(3 - 2 * 0.5)).add(p3.multiply(-0.5));
+  const c3 = p0.multiply(-0.5).add(p1.multiply(2 - 0.5)).add(p2.multiply(0.5 - 2)).add(p3.multiply(0.5));
+
+  const t2 = t * t;
+
+  const C1 = c1;
+  const C2 = c2.multiply(2 * t);
+  const C3 = c3.multiply(3 * t2);
+  const newD = C1.add(C2).add(C3);
+
+
+
+  return Math.sqrt(newD.x * newD.x + newD.y * newD.y);
+}
+
+
 function catmullRom(path, numPoints) {
-  const totalArcLength = path.reduce((length, point, i, arr) => {
-    if (i < arr.length - 1) {
-      const nextPoint = arr[i + 1];
-      const { speed } = findPoint(point, point, nextPoint, nextPoint, 0.5); // Evaluate at t = 0.5 for midpoint
-      return length + speed;
-    }
-    return length;
-  }, 0);
-
-  const step = totalArcLength / numPoints;
-
-  let currentArcLength = 0;
-  let currentPointIndex = 0;
-  let currentT = 0;
-
   const newPath = [];
 
-  for (let i = 0; i < numPoints; i++) {
-    while (currentPointIndex < path.length - 1) {
-      const point1 = path[currentPointIndex];
-      const point2 = path[currentPointIndex + 1];
-
-      const { speed } = findPoint(point1, point1, point2, point2, 0.5); // Evaluate at t = 0.5 for midpoint
-
-      if (currentArcLength + speed >= step * i) {
-        const remainingArcLength = step * i - currentArcLength;
-        currentT = remainingArcLength / speed;
-        currentArcLength += remainingArcLength;
-        break;
-      } else {
-        currentArcLength += speed;
-        currentT = 0;
-        currentPointIndex++;
-      }
+  for (let j = 0; j < path.length - 3; j++) {
+    for (let i = 0; i < numPoints; i++) {
+      const t = i / numPoints;
+      const addPoint = findPoint(path[j], path[j + 1], path[j + 2], path[j + 3], t);
+      addPoint.index = i;
+      addPoint.speed = findDerivative(path[j], path[j + 1], path[j + 2], path[j + 3], t);
+      newPath.push(addPoint);
     }
-
-    const { point } = findPoint(
-      path[currentPointIndex],
-      path[currentPointIndex],
-      path[currentPointIndex + 1],
-      path[currentPointIndex + 2],
-      currentT
-    );
-
-    point.index = i;
-    newPath.push(point);
   }
+
+  const lastPoint = path[path.length - 2];
+  lastPoint.index = (path.length - 3) * numPoints;
+  lastPoint.speed = 0;
+  newPath.push(lastPoint);
 
   return newPath;
 }
