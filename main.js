@@ -125,7 +125,7 @@ function draw() {
       waypoints.push(lastGhostPoint)
 
       // Path Generation
-      pathGenerated = catmullRom(waypoints, numPoints);
+      pathGenerated = catmullRom(waypoints);
       // Draw the generated path
        noFill();
       beginShape();
