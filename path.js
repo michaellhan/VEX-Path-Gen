@@ -37,26 +37,11 @@ function findPoint(p0, p1, p2, p3, t) {
   const t3 = t2 * t;
 
   const newPoint = c0.add(c1.multiply(t)).add(c2.multiply(t2)).add(c3.multiply(t3));
-  return newPoint;
+  const derivative = c1.multiply(1).add(c2.multiply(2 * t)).add(c3.multiply(3 * t2));
+  const speed = Math.sqrt((derivative.x * deriavtive.x) + (derivative.y + derivative.y)); // Calculate the speed as the magnitude of the derivative vector
+  return { point: newPoint, speed: speed };
 }
 
-
-function findDerivative(p0, p1, p2, p3, t) {
-  const c1 = p0.multiply(-0.5).add(p2.multiply(0.5));
-  const c2 = p0.multiply(0.5 * 2).add(p1.multiply(0.5 - 3)).add(p2.multiply(3 - 2 * 0.5)).add(p3.multiply(-0.5));
-  const c3 = p0.multiply(-0.5).add(p1.multiply(2 - 0.5)).add(p2.multiply(0.5 - 2)).add(p3.multiply(0.5));
-
-  const t2 = t * t;
-
-  const C1 = c1;
-  const C2 = c2.multiply(2 * t);
-  const C3 = c3.multiply(3 * t2);
-  const newD = C1.add(C2).add(C3);
-
-
-
-  return Math.sqrt(newD.x * newD.x + newD.y * newD.y);
-}
 
 
 function catmullRom(path, numPoints) {
@@ -65,9 +50,9 @@ function catmullRom(path, numPoints) {
   for (let j = 0; j < path.length - 3; j++) {
     for (let i = 0; i < numPoints; i++) {
       const t = i / numPoints;
-      const addPoint = findPoint(path[j], path[j + 1], path[j + 2], path[j + 3], t);
+      const {addPoint, speed} = findPoint(path[j], path[j + 1], path[j + 2], path[j + 3], t);
       addPoint.index = i;
-      addPoint.speed = findDerivative(path[j], path[j + 1], path[j + 2], path[j + 3], t);
+      addPoint.speed = speed;
       newPath.push(addPoint);
     }
   }
