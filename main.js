@@ -65,7 +65,7 @@ function downloadPath() {
   for (let point of pathGenerated) {
     let convertedX = (point.x - canvasWidth / 2) / (canvasWidth / 2) * 72;
     let convertedY = -(point.y - canvasHeight / 2) / (canvasHeight / 2) * 72;
-    data += `${convertedX}, ${convertedY}\n`;
+    data += `${convertedX}, ${convertedY}, ${point.speed}\n`;
   }
   let blob = new Blob([data], {type: "text/plain;charset=utf-8"});
   let url = URL.createObjectURL(blob);

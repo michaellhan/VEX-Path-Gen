@@ -158,3 +158,9 @@ function cubicSpline2(path, distance, approx) {
   
   return newPath;
 }
+
+
+
+
+
+
