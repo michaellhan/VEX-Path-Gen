@@ -68,6 +68,11 @@ function catmullRom(path) {
     for (let i = 0; i < nu; i++) {
       const t = i / nu;
       const addPoint = findPoint(path[j], path[j + 1], path[j + 2], path[j + 3], t);
+      if (j == path.length - 4){
+        if(Point.distance(addPoint, path[path.length - 2]) < 1){
+          break;
+        }
+      }
       addPoint.index = i;
       addPoint.speed = findDerivative(path[j], path[j + 1], path[j + 2], path[j + 3], t)/dist ;
       newPath.push(addPoint);
