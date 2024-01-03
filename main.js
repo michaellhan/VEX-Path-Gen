@@ -79,7 +79,7 @@ function downloadPath() {
   window.URL.revokeObjectURL(url);
 }
 
-function update50Points() {
+function updateNumPoints() {
   numPoints = numPointsSlider.value(); // Update numPoints with the slider value
 }
 
