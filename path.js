@@ -47,6 +47,7 @@ function findPoint(p0, p1, p2, p3, t) {
 function catmullRom(path, numPoints) {
   const newPath = [];
 
+
   for (let j = 0; j < path.length - 3; j++) {
     const distance = Point.distance(path[j + 1], path[j + 2]);
     const nu  = Math.floor(distance) * 2;
@@ -60,7 +61,6 @@ function catmullRom(path, numPoints) {
   }
 
   const lastPoint = path[path.length - 2];
-  lastPoint.index = (path.length - 3) * numPoints;
   lastPoint.speed = 0;
   newPath.push(lastPoint);
 
