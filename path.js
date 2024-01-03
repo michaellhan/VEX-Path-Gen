@@ -26,11 +26,12 @@ function injection(path, numPoints) {
   return newPath;
 }
 
-function findPoint(p0, p1, p2, p3, t, scale) {
+
+function findPoint(p0, p1, p2, p3, t) {
   const c0 = p1;
-  const c1 = p0.multiply(-scale).add(p2.multiply(scale));
-  const c2 = p0.multiply(scale * 2).add(p1.multiply(scale - 3)).add(p2.multiply(3 - 2 * scale)).add(p3.multiply(-scale));
-  const c3 = p0.multiply(-scale).add(p1.multiply(2 - scale)).add(p2.multiply(scale - 2)).add(p3.multiply(scale));
+  const c1 = p0.multiply(-0.5).add(p2.multiply(0.5));
+  const c2 = p0.multiply(0.5 * 2).add(p1.multiply(0.5 - 3)).add(p2.multiply(3 - 2 * 0.5)).add(p3.multiply(-0.5));
+  const c3 = p0.multiply(-0.5).add(p1.multiply(2 - 0.5)).add(p2.multiply(0.5 - 2)).add(p3.multiply(0.5));
 
   const t2 = t * t;
   const t3 = t2 * t;
@@ -39,20 +40,39 @@ function findPoint(p0, p1, p2, p3, t, scale) {
   return newPoint;
 }
 
+
+function findDerivative(p0, p1, p2, p3, t) {
+  const c1 = p0.multiply(-0.5).add(p2.multiply(0.5));
+  const c2 = p0.multiply(0.5 * 2).add(p1.multiply(0.5 - 3)).add(p2.multiply(3 - 2 * 0.5)).add(p3.multiply(-0.5));
+  const c3 = p0.multiply(-0.5).add(p1.multiply(2 - 0.5)).add(p2.multiply(0.5 - 2)).add(p3.multiply(0.5));
+
+  const t2 = t * t;
+
+  const C1 = c1;
+  const C2 = c2.multiply(2 * t);
+  const C3 = c3.multiply(3 * t2);
+  const newD = C1.add(C2.add(C3));
+
+  return newD;
+}
+
+
 function catmullRom(path, numPoints) {
   const newPath = [];
 
   for (let j = 0; j < path.length - 3; j++) {
     for (let i = 0; i < numPoints; i++) {
       const t = i / numPoints;
-      const addPoint = findPoint(path[j], path[j + 1], path[j + 2], path[j + 3], t, 0.5);
+      const addPoint = findPoint(path[j], path[j + 1], path[j + 2], path[j + 3], t);
       addPoint.index = i;
+      addPoint.speed = findDerivative(path[j], path[j + 1], path[j + 2], path[j + 3], t);
       newPath.push(addPoint);
     }
   }
 
   const lastPoint = path[path.length - 2];
   lastPoint.index = (path.length - 3) * numPoints;
+  lastPoint.speed = 0;
   newPath.push(lastPoint);
 
   return newPath;
