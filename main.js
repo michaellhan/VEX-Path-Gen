@@ -121,7 +121,7 @@ function draw() {
       firstGhostPoint = (first.multiply(2)).subtract(second);
       waypoints.unshift(firstGhostPoint);
   
-      lastGhostPoint = (secondToLast.multiply(2)).subtract(last);
+      lastGhostPoint = (last.multiply(2)).subtract(secondToLast);
       waypoints.push(lastGhostPoint)
 
       // Path Generation
