@@ -44,14 +44,14 @@ function findPoint(p0, p1, p2, p3, t) {
 
 
 
-function catmullRom(path, numPoints) {
+function catmullRom(path) {
   const newPath = [];
 
 
   for (let j = 0; j < path.length - 3; j++) {
-    const distance = Point.distance(path[j + 1], path[j + 2]);
+    const dist = Point.distance(path[j + 1], path[j + 2]);
 
-    const nu  = Math.floor(distance) * 2;
+    const nu  = Math.floor(dist) * 2;
     for (let i = 0; i < nu; i++) {
       const t = i / nu;
       const {addPoint, speed} = findPoint(path[j], path[j + 1], path[j + 2], path[j + 3], t);
