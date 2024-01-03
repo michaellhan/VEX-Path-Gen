@@ -205,9 +205,11 @@ function mouseClicked() {
       const y = -(mouseY - height / 2) / (height / 2) * 72;
       dots.push({x: mouseX, y: mouseY, displayX: Math.round(x), displayY: Math.round(y)}); // Add the dot to the array
       dotsElement.innerHTML += `<li>(${Math.round(x)}, ${Math.round(y)})</li>`;
-      let mappedDots = dots.map(dot => new Point(dot.x, dot.y));
-      adjustPointForCollinearity(mappedDots, mappedDots.length - 1);
-      dots = mappedDots.map(pt => ({ x: pt.x, y: pt.y }));
+      if (selectedMethod === 'cubic-spline') {
+        let mappedDots = dots.map(dot => new Point(dot.x, dot.y));
+        adjustPointForCollinearity(mappedDots, mappedDots.length - 1);
+        dots = mappedDots.map(pt => ({ x: pt.x, y: pt.y }));
+      }
     }
   }
 }
@@ -259,11 +261,13 @@ function projectPointOnLine(pointA, pointB, pointC) {
 
 function stopDragging() {
   if (draggedPointIndex !== -1) {
-      let mappedDots = dots.map(dot => new Point(dot.x, dot.y));
-      adjustPointForCollinearity(mappedDots, draggedPointIndex);
+      // Apply collinearity adjustments only for cubic spline
+      if (selectedMethod === 'cubic-spline') {
+          let mappedDots = dots.map(dot => new Point(dot.x, dot.y));
+          adjustPointForCollinearity(mappedDots, draggedPointIndex);
+          dots = mappedDots.map(pt => ({ x: pt.x, y: pt.y }));
+      }
 
-      // Update the original dots array
-      dots = mappedDots.map(pt => ({ x: pt.x, y: pt.y }));
       draggedPointIndex = -1;
   }
   document.body.classList.remove('no-select');
