@@ -106,6 +106,7 @@ function draw() {
   // Convert dots array into waypoints array with Point objects
   waypoints = dots.map(dot => new Point(dot.x, dot.y, dots.indexOf(dot)));
 
+  const numPoints = numPointsSlider.value();
 
   // Update the path generation method based on the dropdown selection
   updatePathGenMethod();
@@ -124,7 +125,7 @@ function draw() {
       waypoints.push(lastGhostPoint)
 
       // Path Generation
-      pathGenerated = catmullRom(waypoints);
+      pathGenerated = catmullRom(waypoints, numPoints);
       // Draw the generated path
        noFill();
       beginShape();
