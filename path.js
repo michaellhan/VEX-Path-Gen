@@ -38,7 +38,7 @@ function findPoint(p0, p1, p2, p3, t) {
 
   const newPoint = c0.add(c1.multiply(t)).add(c2.multiply(t2)).add(c3.multiply(t3));
   const derivative = c1.multiply(1).add(c2.multiply(2 * t)).add(c3.multiply(3 * t2));
-  const speed = Math.sqrt(derivative.x * derivative.x + derivative.y * derivative.y);
+  const speed = derivative.magnitude(); // Calculate the speed as the magnitude of the derivative vector
   return { point: newPoint, speed: speed };
 }
 
