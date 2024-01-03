@@ -51,9 +51,11 @@ function findDerivative(p0, p1, p2, p3, t) {
   const C1 = c1;
   const C2 = c2.multiply(2 * t);
   const C3 = c3.multiply(3 * t2);
-  const newD = C1.add(C2.add(C3));
+  const newD = C1.add(C2).add(C3);
 
-  return newD;
+
+
+  return Math.sqrt(newD.x * newD.x + newD.y * newD.y);
 }
 
 
