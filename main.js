@@ -34,7 +34,7 @@ function setup() {
   canvas.mousePressed(startDragging);
   canvas.mouseReleased(stopDragging);
   // Create the slider
-  numPointsSlider = createSlider(1, 20, numPoints); // min, max, default value
+  numPointsSlider = createSlider(1, 40, numPoints); // min, max, default value
   numPointsSlider.position(windowWidth / 2, 100); // Center the slider horizontally
   numPointsSlider.input(updateNumPoints); // Call updateNumPoints function when slider value changes
   // Position the slider and its label
