@@ -61,7 +61,7 @@ function findDerivative(p0, p1, p2, p3, t) {
 
 function catmullRom(path) {
   const newPath = [];
-
+  const lastPoint = path[path.length - 2];
   for (let j = 0; j < path.length - 3; j++) {
     const dist = Point.distance(path[j + 1], path[j + 2]);
     const nu = Math.floor(dist/2.5);
@@ -83,7 +83,7 @@ function catmullRom(path) {
     }
   }
 
-  const lastPoint = path[path.length - 2];
+  
   lastPoint.speed = 0;
   newPath.push(lastPoint);
 
