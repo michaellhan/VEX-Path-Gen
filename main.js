@@ -235,6 +235,26 @@ function startDragging() {
   }
 }
 
+function adjustPointForCollinearity(path, index) {
+  if ((index - 2) % 3 === 0 && index >= 2) {
+      const point3k = path[index - 2];
+      const point3kPlus1 = path[index - 1];
+      const point3kPlus2 = path[index];
+
+      const adjustedPoint3kPlus2 = projectPointOnLine(point3k, point3kPlus1, point3kPlus2);
+
+      path[index] = adjustedPoint3kPlus2;
+  }
+}
+
+function projectPointOnLine(pointA, pointB, pointC) {
+  const AB = pointB.subtract(pointA);
+  const AC = pointC.subtract(pointA);
+  const projectionScalar = Point.dotProduct(AC, AB) / Point.dotProduct(AB, AB);
+
+  return pointA.add(AB.multiply(projectionScalar));
+}
+
 function stopDragging() {
   if (draggedPointIndex !== -1) {
     adjustPointForCollinearity(dots, draggedPointIndex);
