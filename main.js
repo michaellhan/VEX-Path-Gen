@@ -9,7 +9,7 @@ let selectedDot = null;
 let draggedPointIndex = -1;
 let offsetX = 0;
 let offsetY = 0;
-let numPoints = 15; // Set a default value for numPoints
+let numPoints = 25; // Set a default value for numPoints
 let numPointsSlider; // Declare a global variable for the slider
 let pathGenerated = [];
 let pathGenMethodDropdown;
@@ -34,7 +34,7 @@ function setup() {
   canvas.mousePressed(startDragging);
   canvas.mouseReleased(stopDragging);
   // Create the slider
-  numPointsSlider = createSlider(1, 20, numPoints); // min, max, default value
+  numPointsSlider = createSlider(1, 50, numPoints); // min, max, default value
   numPointsSlider.position(windowWidth / 2, 100); // Center the slider horizontally
   numPointsSlider.input(updateNumPoints); // Call updateNumPoints function when slider value changes
   // Position the slider and its label
@@ -79,7 +79,7 @@ function downloadPath() {
   window.URL.revokeObjectURL(url);
 }
 
-function updateNumPoints() {
+function update50Points() {
   numPoints = numPointsSlider.value(); // Update numPoints with the slider value
 }
 
