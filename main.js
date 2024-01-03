@@ -241,9 +241,9 @@ function startDragging() {
 
 function adjustPointForCollinearity(path, index) {
   if (index % 3 === 0 && index >= 3) {
-      const point3k = path[index - 2];
-      const point3kPlus1 = path[index - 1];
-      const point3kPlus2 = path[index];
+      const point3k = path[index - 1];
+      const point3kPlus1 = path[index];
+      const point3kPlus2 = path[index + 1];
 
       const adjustedPoint3kPlus2 = projectPointOnLine(point3k, point3kPlus1, point3kPlus2);
 
