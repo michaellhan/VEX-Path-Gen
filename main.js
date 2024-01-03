@@ -122,7 +122,9 @@ function draw() {
       waypoints.unshift(firstGhostPoint);
   
       lastGhostPoint = (last.multiply(2)).subtract(secondToLast);
-      waypoints.push(lastGhostPoint)
+      
+      //waypoints.push(lastGhostPoint)
+      waypoints.push(last)
 
       // Path Generation
       pathGenerated = catmullRom(waypoints);
