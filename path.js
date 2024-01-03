@@ -73,7 +73,7 @@ function catmullRom(path) {
 
       if(j == (path.length - 4)){
         if(Point.distance(addPoint, lastPoint) < 5){
-          addPoint.speed = addPoint.speed * Point.distance(addPoint, lastPoint) / 5
+          addPoint.speed = addPoint.speed * Point.distance(addPoint, lastPoint) / 5;
         }
       }
       
