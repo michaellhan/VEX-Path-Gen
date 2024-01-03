@@ -48,8 +48,6 @@ function catmullRom(path, numPoints) {
   const newPath = [];
 
   for (let j = 0; j < path.length - 3; j++) {
-    const distance = Point.distance(path[j + 1], path[j + 2]);
-    const numPoints = Math.floor(distance) * 2;
     for (let i = 0; i < numPoints; i++) {
       const t = i / numPoints;
       const {addPoint, speed} = findPoint(path[j], path[j + 1], path[j + 2], path[j + 3], t);
