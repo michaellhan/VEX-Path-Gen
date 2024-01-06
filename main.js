@@ -216,7 +216,11 @@ function mouseClicked() {
       const y = -(mouseY - height / 2) / (height / 2) * 72;
       dots.push({x: mouseX, y: mouseY, displayX: Math.round(x), displayY: Math.round(y)}); // Add the dot to the array
       dotsElement.innerHTML += `<li>(${Math.round(x)}, ${Math.round(y)})</li>`;
-      
+      if (selectedMethod === 'cubic-spline') {
+        let mappedDots = dots.map(dot => new Point(dot.x, dot.y));
+        adjustPointForCollinearity(mappedDots, mappedDots.length - 1);
+        dots = mappedDots.map(pt => ({ x: pt.x, y: pt.y }));
+      }
     }
   }
 }
