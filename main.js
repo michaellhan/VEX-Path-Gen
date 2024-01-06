@@ -28,6 +28,7 @@ function setup() {
   canvas.parent('canvas-container');
   field.resize(canvasWidth, canvasHeight); // Resize the image to fit the canvas
   coordinatesElement = document.getElementById('coordinates');
+  positionUI();
   dotsElement = document.getElementById('dots');
   canvas.mousePressed(startDragging);
   canvas.mouseReleased(stopDragging);
@@ -35,7 +36,21 @@ function setup() {
   pathGenMethodDropdown.addEventListener('change', updatePathGenMethod);
   downloadButton = document.getElementById('download');
   downloadButton.addEventListener('click', downloadPath);
+  
 }
+function positionUI() {
+  const userDropdown = document.getElementById('dropdown-container');
+  userDropdown.style.display = 'flex'; 
+  userDropdown.style.gap = '20px';
+
+  const formX = window.innerWidth * 5 / 6; // X position for the user input form 
+  const formY = 600; // Y position for the user input
+  userDropdown.style.position = 'absolute';
+  userDropdown.style.left = formX + 'px';
+  userDropdown.style.top = formY + 'px';
+}
+
+
 
 function updatePathGenMethod() {
   let previousMethod = selectedMethod;
