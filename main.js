@@ -49,14 +49,15 @@ function positionUI() {
   userDropdown.style.left = formX + 'px';
   userDropdown.style.top = formY + 'px';
 
-  downloadButton.style.display = 'flex'; 
-  downloadButton.style.gap = '20px';
+  const downloadB = document.getElementById('#download');
+  downloadB.style.display = 'flex'; 
+  downloadB.style.gap = '20px';
 
   const downloadX = window.innerWidth * 4.25 / 6; // X position for the user input form 
   const downloadY = 100; // Y position for the user input
-  downloadButton.style.position = 'absolute';
-  downloadButton.style.left = downloadX + 'px';
-  downloadButton.style.top = downloadY + 'px';
+  downloadB.style.position = 'absolute';
+  downloadB.style.left = downloadX + 'px';
+  downloadB.style.top = downloadY + 'px';
 }
 
 
