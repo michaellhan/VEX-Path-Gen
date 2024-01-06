@@ -46,7 +46,13 @@ function setup() {
 }
 
 function updatePathGenMethod() {
+  let previousMethod = selectedMethod;
   selectedMethod = pathGenMethodDropdown.value;
+
+  // Check if the method has been changed
+  if (previousMethod !== selectedMethod) {
+    clearAllPoints();
+  }
 }
 
 function positionSlider() {
@@ -181,6 +187,20 @@ function draw() {
   } else {
     coordinatesElement.textContent = '(?, ?)';
   }
+}
+
+function clearAllPoints() {
+  // Clear the points array
+  dots = [];
+
+  // Clear the UI elements that show points
+  dotsElement.innerHTML = '';
+
+  // Optionally, you can also clear the generated path
+  pathGenerated = [];
+
+  // Redraw the canvas to reflect the changes
+  redraw();
 }
 
 function mouseClicked() {
