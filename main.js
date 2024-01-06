@@ -211,17 +211,7 @@ function mouseClicked() {
         return;
       }
     }
-    if (mouseButton === LEFT) {
-      const x = (mouseX - width / 2) / (width / 2) * 72;
-      const y = -(mouseY - height / 2) / (height / 2) * 72;
-      dots.push({x: mouseX, y: mouseY, displayX: Math.round(x), displayY: Math.round(y)}); // Add the dot to the array
-      dotsElement.innerHTML += `<li>(${Math.round(x)}, ${Math.round(y)})</li>`;
-      if (selectedMethod === 'cubic-spline') {
-        let mappedDots = dots.map(dot => new Point(dot.x, dot.y));
-        adjustPointForCollinearity(mappedDots, mappedDots.length - 1);
-        dots = mappedDots.map(pt => ({ x: pt.x, y: pt.y }));
-      }
-    }
+    
   }
 }
 
@@ -274,7 +264,12 @@ function projectPointOnLine(pointA, pointB, pointC) {
 
 function stopDragging() {
   if (draggedPointIndex !== -1) {
-      
+      // Apply collinearity adjustments only for cubic spline
+      if (selectedMethod === 'cubic-spline') {
+          let mappedDots = dots.map(dot => new Point(dot.x, dot.y));
+          adjustPointForCollinearity(mappedDots, draggedPointIndex);
+          dots = mappedDots.map(pt => ({ x: pt.x, y: pt.y }));
+      }
       updateCoordinatesDisplay(); 
       draggedPointIndex = -1;
   }
