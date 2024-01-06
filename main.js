@@ -1,10 +1,11 @@
 let field;
 let coordinatesElement;
-let waypointsElement;
+let dotsElement;
 let canvasWidth = 720; // Set the width of the canvas
 let canvasHeight = 720; // Set the height of the canvas
+let dots = []; // Array to store the coordinates of the dots
 let waypoints = [];
-let selectedPoint = null;
+let selectedDot = null;
 let draggedPointIndex = -1;
 let offsetX = 0;
 let offsetY = 0;
@@ -27,7 +28,7 @@ function setup() {
   canvas.parent('canvas-container');
   field.resize(canvasWidth, canvasHeight); // Resize the image to fit the canvas
   coordinatesElement = document.getElementById('coordinates');
-  waypointsElement = document.getElementById('waypoints');
+  dotsElement = document.getElementById('dots');
   canvas.mousePressed(startDragging);
   canvas.mouseReleased(stopDragging);
   pathGenMethodDropdown = document.getElementById('path-gen-method');
@@ -87,10 +88,13 @@ function draw() {
     if (newY < buffer) newY = buffer;
     if (newY > canvasHeight - buffer) newY = canvasHeight - buffer;
 
-    waypoints[draggedPointIndex].x = newX;
-    waypoints[draggedPointIndex].y = newY;
+    dots[draggedPointIndex].x = newX;
+    dots[draggedPointIndex].y = newY;
     updateCoordinatesDisplay();
   }
+
+  // Convert dots array into waypoints array with Point objects
+  waypoints = dots.map(dot => new Point(dot.x, dot.y, dots.indexOf(dot)));
 
   // Update the path generation method based on the dropdown selection
   updatePathGenMethod();
@@ -156,14 +160,14 @@ function draw() {
     }
   }
 
-  // Drawing existing points
-  for (let point of waypoints) {
-    if (point === selectedPoint) {
-      fill(255, 0, 0, 200); // Darken the selected point
+  // Drawing existing dots
+  for (let dot of dots) {
+    if (dot === selectedDot) {
+      fill(255, 0, 0, 200); // Darken the selected dot
     } else {
       fill(255, 0, 0, 100);
     }
-    ellipse(point.x, point.y, 15);
+    ellipse(dot.x, dot.y, 15);
   }
 
   // Display coordinates
@@ -178,10 +182,10 @@ function draw() {
 
 function clearAllPoints() {
   // Clear the points array
-  waypoints = [];
+  dots = [];
 
   // Clear the UI elements that show points
-  waypointsElement.innerHTML = '';
+  dotsElement.innerHTML = '';
 
   // Optionally, you can also clear the generated path
   pathGenerated = [];
@@ -196,13 +200,13 @@ function mouseClicked() {
   }
 
   if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
-    for (let point of waypoints) {
-      const distance = dist(mouseX, mouseY, point.x, point.y);
+    for (let dot of dots) {
+      const distance = dist(mouseX, mouseY, dot.x, dot.y);
       if (distance < 20) {
-        if (point === selectedPoint) {
-          selectedPoint = null; // Deselect the point if it's already selected
+        if (dot === selectedDot) {
+          selectedDot = null; // Deselect the dot if it's already selected
         } else {
-          selectedPoint = point; // Select the point
+          selectedDot = dot; // Select the dot
         }
         return;
       }
@@ -211,34 +215,36 @@ function mouseClicked() {
       const x = (mouseX - width / 2) / (width / 2) * 72;
       const y = -(mouseY - height / 2) / (height / 2) * 72;
       
-      waypoints.push({x: mouseX, y: mouseY}); // Add the point to the array
-      waypoints.innerHTML += `<li>(${Math.round(x)}, ${Math.round(y)})</li>`;
+      dots.push({x: mouseX, y: mouseY, displayX: Math.round(x), displayY: Math.round(y)}); // Add the dot to the array
+      dotsElement.innerHTML += `<li>(${Math.round(x)}, ${Math.round(y)})</li>`;
       if (selectedMethod === 'cubic-spline') {
-        adjustPointForCollinearity(waypoints, waypoints.length - 1);
+        let mappedDots = dots.map(dot => new Point(dot.x, dot.y));
+        adjustPointForCollinearity(mappedDots, mappedDots.length - 1);
+        dots = mappedDots.map(pt => ({ x: pt.x, y: pt.y }));
       }
     }
   }
 }
 
 function keyPressed() {
-  if (keyCode === BACKSPACE && selectedPoint) {
-    const index = waypoints.indexOf(selectedPoint);
+  if (keyCode === BACKSPACE && selectedDot) {
+    const index = dots.indexOf(selectedDot);
     if (index !== -1) {
-      waypoints.splice(index, 1); // Remove the selected point from the array
+      dots.splice(index, 1); // Remove the selected dot from the array
       // loop here
-      waypointsElement.removeChild(waypointsElement.childNodes[index]);
-      selectedPoint = null; // Deselect the point
+      dotsElement.removeChild(dotsElement.childNodes[index]);
+      selectedDot = null; // Deselect the dot
     }
   }
 }
 
 function startDragging() {
-  for (let i = 0; i < waypoints.length; i++) {
-    const d = dist(mouseX, mouseY, waypoints[i].x, waypoints[i].y);
+  for (let i = 0; i < dots.length; i++) {
+    const d = dist(mouseX, mouseY, dots[i].x, dots[i].y);
     if (d < 20) {
       draggedPointIndex = i;
-      offsetX = waypoints[i].x - mouseX;
-      offsetY = waypoints[i].y - mouseY;
+      offsetX = dots[i].x - mouseX;
+      offsetY = dots[i].y - mouseY;
       document.body.classList.add('no-select'); // Add the no-select class to the body
       updateCoordinatesDisplay(); // Update coordinates display
       break;
@@ -271,7 +277,12 @@ function stopDragging() {
   if (draggedPointIndex !== -1) {
       // Apply collinearity adjustments only for cubic spline
       if (selectedMethod === 'cubic-spline') {
-          adjustPointForCollinearity(waypoints, draggedPointIndex);
+          let mappedDots = dots.map(dot => new Point(dot.x, dot.y));
+          adjustPointForCollinearity(mappedDots, draggedPointIndex);
+          dots = mappedDots.map(pt => ({ x: pt.x, y: pt.y }));
+          for(let dt in dots){
+            console.log(dt.x +", "+ dt.y);
+          }
       }
       updateCoordinatesDisplay(); 
       draggedPointIndex = -1;
@@ -280,10 +291,10 @@ function stopDragging() {
 }
 
 function updateCoordinatesDisplay() {
-  waypointsElement.innerHTML = ''; // Clear current list
-  waypoints.forEach(dot => {
+  dotsElement.innerHTML = ''; // Clear current list
+  dots.forEach(dot => {
     const x = (dot.x - canvasWidth / 2) / (canvasWidth / 2) * 72;
     const y = -(dot.y - canvasHeight / 2) / (canvasHeight / 2) * 72;
-    waypoints.innerHTML += `<li>(${Math.round(x)}, ${Math.round(y)})</li>`; // Add updated coordinates
+    dotsElement.innerHTML += `<li>(${Math.round(x)}, ${Math.round(y)})</li>`; // Add updated coordinates
   });
 }
