@@ -274,12 +274,7 @@ function projectPointOnLine(pointA, pointB, pointC) {
 
 function stopDragging() {
   if (draggedPointIndex !== -1) {
-      // Apply collinearity adjustments only for cubic spline
-      if (selectedMethod === 'cubic-spline') {
-          let mappedDots = dots.map(dot => new Point(dot.x, dot.y));
-          adjustPointForCollinearity(mappedDots, draggedPointIndex);
-          dots = mappedDots.map(pt => ({ x: pt.x, y: pt.y }));
-      }
+      
       updateCoordinatesDisplay(); 
       draggedPointIndex = -1;
   }
