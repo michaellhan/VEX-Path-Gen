@@ -43,8 +43,8 @@ function positionUI() {
   userDropdown.style.display = 'flex'; 
   userDropdown.style.gap = '20px';
 
-  const formX = window.innerWidth * 5 / 6; // X position for the user input form 
-  const formY = 600; // Y position for the user input
+  const formX = window.innerWidth * 4 / 6; // X position for the user input form 
+  const formY = 200; // Y position for the user input
   userDropdown.style.position = 'absolute';
   userDropdown.style.left = formX + 'px';
   userDropdown.style.top = formY + 'px';
