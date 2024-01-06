@@ -43,11 +43,21 @@ function positionUI() {
   userDropdown.style.display = 'flex'; 
   userDropdown.style.gap = '20px';
 
-  const formX = window.innerWidth * 4 / 6; // X position for the user input form 
-  const formY = 200; // Y position for the user input
+  const formX = window.innerWidth * 4.25 / 6; // X position for the user input form 
+  const formY = 150; // Y position for the user input
   userDropdown.style.position = 'absolute';
   userDropdown.style.left = formX + 'px';
   userDropdown.style.top = formY + 'px';
+
+  const downloadB = document.getElementById('#download');
+  downloadB.style.display = 'flex'; 
+  downloadB.style.gap = '20px';
+
+  const downloadX = window.innerWidth * 4.25 / 6; // X position for the user input form 
+  const downloadY = 100; // Y position for the user input
+  downloadB.style.position = 'absolute';
+  downloadB.style.left = downloadX + 'px';
+  downloadB.style.top = downloadY + 'px';
 }
 
 
