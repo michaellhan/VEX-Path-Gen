@@ -211,7 +211,13 @@ function mouseClicked() {
         return;
       }
     }
-    
+    if (mouseButton === LEFT) {
+      const x = (mouseX - width / 2) / (width / 2) * 72;
+      const y = -(mouseY - height / 2) / (height / 2) * 72;
+      dots.push({x: mouseX, y: mouseY, displayX: Math.round(x), displayY: Math.round(y)}); // Add the dot to the array
+      dotsElement.innerHTML += `<li>(${Math.round(x)}, ${Math.round(y)})</li>`;
+      
+    }
   }
 }
 
