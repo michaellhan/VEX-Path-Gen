@@ -107,6 +107,7 @@ function draw() {
 
     dots[draggedPointIndex].x = newX;
     dots[draggedPointIndex].y = newY;
+    updateCoordinatesDisplay();
   }
 
   // Convert dots array into waypoints array with Point objects
@@ -254,10 +255,12 @@ function startDragging() {
       offsetX = dots[i].x - mouseX;
       offsetY = dots[i].y - mouseY;
       document.body.classList.add('no-select'); // Add the no-select class to the body
+      updateCoordinatesDisplay(); // Update coordinates display
       break;
     }
   }
 }
+
 
 function adjustPointForCollinearity(path, index) {
   if (index % 3 === 1 && index >= 3) {
@@ -287,8 +290,17 @@ function stopDragging() {
           adjustPointForCollinearity(mappedDots, draggedPointIndex);
           dots = mappedDots.map(pt => ({ x: pt.x, y: pt.y }));
       }
-
+      updateCoordinatesDisplay(); 
       draggedPointIndex = -1;
   }
   document.body.classList.remove('no-select');
+}
+
+function updateCoordinatesDisplay() {
+  dotsElement.innerHTML = ''; // Clear current list
+  dots.forEach(dot => {
+    const x = (dot.x - canvasWidth / 2) / (canvasWidth / 2) * 72;
+    const y = -(dot.y - canvasHeight / 2) / (canvasHeight / 2) * 72;
+    dotsElement.innerHTML += `<li>(${Math.round(x)}, ${Math.round(y)})</li>`; // Add updated coordinates
+  });
 }
