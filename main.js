@@ -136,13 +136,14 @@ function draw() {
     }
     // Use the first n points to generate the path
 
-    for(let j = 0; j < n; j++){
+    for(let j = 0; j < n - 1; j++){
       stroke(0, 0, 255);
       strokeWeight(2);
       if((j % 3 == 0) || (j % 3 == 2)){
         line(waypoints[j].x, waypoints[j].y, waypoints[j + 1].x, waypoints[j + 1].y);
       }
     }
+
     if (n > 3) {
       pathGenerated = cubicSpline2(waypoints.slice(0, n), 2, 30);
       // Draw the generated path
