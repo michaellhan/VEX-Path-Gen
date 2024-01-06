@@ -280,10 +280,12 @@ function stopDragging() {
           let mappedDots = dots.map(dot => new Point(dot.x, dot.y));
           adjustPointForCollinearity(mappedDots, draggedPointIndex);
           dots = mappedDots.map(pt => ({ x: pt.x, y: pt.y }));
+          for(let dt in dots){
+            console.log(dt.x +", "+ dt.y);
+          }
       }
       updateCoordinatesDisplay(); 
       draggedPointIndex = -1;
-      waypoints = dots.map(dot => new Point(dot.x, dot.y, dots.indexOf(dot)));
   }
   document.body.classList.remove('no-select');
 }
