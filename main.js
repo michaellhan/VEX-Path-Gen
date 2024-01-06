@@ -28,7 +28,7 @@ function setup() {
   canvas.parent('canvas-container');
   field.resize(canvasWidth, canvasHeight); // Resize the image to fit the canvas
   coordinatesElement = document.getElementById('coordinates');
-  
+  positionUI();
   dotsElement = document.getElementById('dots');
   canvas.mousePressed(startDragging);
   canvas.mouseReleased(stopDragging);
@@ -36,7 +36,7 @@ function setup() {
   pathGenMethodDropdown.addEventListener('change', updatePathGenMethod);
   downloadButton = document.getElementById('download');
   downloadButton.addEventListener('click', downloadPath);
-  positionUI();
+  
 }
 function positionUI() {
   const userDropdown = document.getElementById('dropdown-container');
