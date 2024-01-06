@@ -9,8 +9,6 @@ let selectedDot = null;
 let draggedPointIndex = -1;
 let offsetX = 0;
 let offsetY = 0;
-let numPoints = 15; // Set a default value for numPoints
-let numPointsSlider; // Declare a global variable for the slider
 let pathGenerated = [];
 let pathGenMethodDropdown;
 let downloadButton;
@@ -33,12 +31,6 @@ function setup() {
   dotsElement = document.getElementById('dots');
   canvas.mousePressed(startDragging);
   canvas.mouseReleased(stopDragging);
-  // Create the slider
-  numPointsSlider = createSlider(1, 20, numPoints); // min, max, default value
-  numPointsSlider.position(windowWidth / 2, 100); // Center the slider horizontally
-  numPointsSlider.input(updateNumPoints); // Call updateNumPoints function when slider value changes
-  // Position the slider and its label
-  positionSlider();
   pathGenMethodDropdown = document.getElementById('path-gen-method');
   pathGenMethodDropdown.addEventListener('change', updatePathGenMethod);
   downloadButton = document.getElementById('download');
@@ -55,16 +47,6 @@ function updatePathGenMethod() {
   }
 }
 
-function positionSlider() {
-  const sliderX = windowWidth / 2; // X position for the slider (centered horizontally)
-  const sliderY = 100; // Y position for the slider above the coordinates header
-  numPointsSlider.position(sliderX, sliderY); // Adjust position as needed
-
-  const labelX = windowWidth / 2; // X position for the label (centered horizontally)
-  const labelY = 70; // Y position for the label above the slider
-  const sliderLabel = select('#slider-label');
-  sliderLabel.position(labelX, labelY); // Adjust position as needed
-}
 
 function downloadPath() {
   let data = "";
@@ -85,9 +67,7 @@ function downloadPath() {
   window.URL.revokeObjectURL(url);
 }
 
-function updateNumPoints() {
-  numPoints = numPointsSlider.value(); // Update numPoints with the slider value
-}
+
 
 function draw() {
   background(field);
@@ -112,8 +92,6 @@ function draw() {
 
   // Convert dots array into waypoints array with Point objects
   waypoints = dots.map(dot => new Point(dot.x, dot.y, dots.indexOf(dot)));
-
-  const numPoints = numPointsSlider.value();
 
   // Update the path generation method based on the dropdown selection
   updatePathGenMethod();
