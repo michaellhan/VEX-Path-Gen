@@ -196,6 +196,7 @@ function clearAllPoints() {
 
 function mouseClicked() {
   if (draggedPointIndex !== -1) {
+    draggedPointIndex = -1;
     return;
   }
 
@@ -280,9 +281,6 @@ function stopDragging() {
           let mappedDots = dots.map(dot => new Point(dot.x, dot.y));
           adjustPointForCollinearity(mappedDots, draggedPointIndex);
           dots = mappedDots.map(pt => ({ x: pt.x, y: pt.y }));
-          for(let dt in dots){
-            console.log(dt.x +", "+ dt.y);
-          }
       }
       updateCoordinatesDisplay(); 
       draggedPointIndex = -1;
