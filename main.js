@@ -315,9 +315,16 @@ function updateCoordinatesDisplay() {
 }
 
 function copyCodeToClipboard() {
-  let codeString = 'goToPoint(0, 0);\n'; // Starting from (0,0)
+  // Start with the (0,0) point
+  let codeString = 'goToPoint(0, 0);\n';
+
   for (let point of waypoints) {
-    codeString += `goToPoint(${point.x}, ${point.y});\n`;
+    // Convert canvas coordinates to your coordinate system
+    let scaledX = (point.x - canvasWidth / 2) / (canvasWidth / 2) * 72;
+    let scaledY = -(point.y - canvasHeight / 2) / (canvasHeight / 2) * 72;
+
+    // Append the command to the code string
+    codeString += `goToPoint(${scaledX.toFixed(1)}, ${scaledY.toFixed(1)});\n`;
   }
 
   // Copy codeString to clipboard
