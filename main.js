@@ -48,6 +48,16 @@ function updatePathGenMethod() {
   if (previousMethod !== selectedMethod) {
     clearAllPoints();
   }
+
+  if (selectedMethod === 'code-gen') {
+    downloadButton.textContent = 'Copy Code';
+    downloadButton.removeEventListener('click', downloadPath);
+    downloadButton.addEventListener('click', copyCodeToClipboard);
+  } else {
+    downloadButton.textContent = 'Download Path';
+    downloadButton.removeEventListener('click', copyCodeToClipboard);
+    downloadButton.addEventListener('click', downloadPath);
+  }
 }
 
 
@@ -302,4 +312,16 @@ function updateCoordinatesDisplay() {
     const y = -(dot.y - canvasHeight / 2) / (canvasHeight / 2) * 72;
     dotsElement.innerHTML += `<li>(${Math.round(x)}, ${Math.round(y)})</li>`; // Add updated coordinates
   });
+}
+
+function copyCodeToClipboard() {
+  let codeString = 'goToPoint(0, 0);\n'; // Starting from (0,0)
+  for (let point of waypoints) {
+    codeString += `goToPoint(${point.x}, ${point.y});\n`;
+  }
+
+  // Copy codeString to clipboard
+  navigator.clipboard.writeText(codeString)
+    .then(() => console.log('Code copied to clipboard!'))
+    .catch(err => console.error('Error copying code: ', err));
 }
