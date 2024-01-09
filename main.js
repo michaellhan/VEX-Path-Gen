@@ -170,8 +170,8 @@ function draw() {
     }
   } else if (selectedMethod === 'code-gen'){
     for(let j = 0; j < waypoints.length - 1; j++){
-      stroke(0, 0, 255);
-      strokeWeight(2);
+        stroke(0, 255, 0); // Set path color
+        strokeWeight(2); // Set path stroke weight
       line(waypoints[j].x, waypoints[j].y, waypoints[j + 1].x, waypoints[j + 1].y);
     }
 
