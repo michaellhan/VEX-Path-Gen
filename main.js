@@ -20,8 +20,6 @@ function preload() {
     canvasHeight = windowHeight - 100; // Set canvas height to the user's screen height
     canvasWidth = canvasHeight * aspectRatio; // Calculate canvas width based on aspect ratio
     field.resize(canvasWidth, canvasHeight); // Resize the image to fit the canvas
-    console.log('Canvas Width set to:', canvasWidth);
-    console.log('Canvas Height set to:', canvasHeight);
   });
 }
 
@@ -91,9 +89,6 @@ function draw() {
   if (draggedPointIndex !== -1) {
     let newX = mouseX + offsetX;
     let newY = mouseY + offsetY;
-    
-    console.log('Attempting to drag point', draggedPointIndex);
-    console.log('MouseX:', mouseX, 'Canvas Width:', canvasWidth);
 
     const buffer = 12; // Set a buffer distance from the edge of the field
 
@@ -106,7 +101,6 @@ function draw() {
     dots[draggedPointIndex].x = newX;
     dots[draggedPointIndex].y = newY;
     updateCoordinatesDisplay();
-    console.log('MouseX:', mouseX, 'Canvas Width:', canvasWidth, 'Buffer:', buffer);
   }
 
   // Convert dots array into waypoints array with Point objects
@@ -263,18 +257,26 @@ function keyPressed() {
 }
 
 function startDragging() {
+  // Get the actual bounding box of the canvas
+  let canvasRect = document.getElementById('defaultCanvas0').getBoundingClientRect();
+
   for (let i = 0; i < dots.length; i++) {
-    const d = dist(mouseX, mouseY, dots[i].x, dots[i].y);
+    // Adjust mouseX and mouseY based on the canvas's actual position on the screen
+    const adjustedMouseX = mouseX - canvasRect.left;
+    const adjustedMouseY = mouseY - canvasRect.top;
+
+    const d = dist(adjustedMouseX, adjustedMouseY, dots[i].x, dots[i].y);
     if (d < 20) {
       draggedPointIndex = i;
-      offsetX = dots[i].x - mouseX;
-      offsetY = dots[i].y - mouseY;
-      document.body.classList.add('no-select'); // Add the no-select class to the body
-      updateCoordinatesDisplay(); // Update coordinates display
+      offsetX = dots[i].x - adjustedMouseX;
+      offsetY = dots[i].y - adjustedMouseY;
+      document.body.classList.add('no-select');
+      updateCoordinatesDisplay();
       break;
     }
   }
 }
+
 
 
 function adjustPointForCollinearity(path, index) {
