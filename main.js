@@ -257,26 +257,18 @@ function keyPressed() {
 }
 
 function startDragging() {
-  // Get the actual bounding box of the canvas
-  let canvasRect = document.getElementById('defaultCanvas0').getBoundingClientRect();
-
   for (let i = 0; i < dots.length; i++) {
-    // Adjust mouseX and mouseY based on the canvas's actual position on the screen
-    const adjustedMouseX = mouseX - canvasRect.left;
-    const adjustedMouseY = mouseY - canvasRect.top;
-
-    const d = dist(adjustedMouseX, adjustedMouseY, dots[i].x, dots[i].y);
+    const d = dist(mouseX, mouseY, dots[i].x, dots[i].y);
     if (d < 20) {
       draggedPointIndex = i;
-      offsetX = dots[i].x - adjustedMouseX;
-      offsetY = dots[i].y - adjustedMouseY;
-      document.body.classList.add('no-select');
-      updateCoordinatesDisplay();
+      offsetX = dots[i].x - mouseX;
+      offsetY = dots[i].y - mouseY;
+      document.body.classList.add('no-select'); // Add the no-select class to the body
+      updateCoordinatesDisplay(); // Update coordinates display
       break;
     }
   }
 }
-
 
 
 function adjustPointForCollinearity(path, index) {
