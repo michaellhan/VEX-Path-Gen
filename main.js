@@ -20,6 +20,8 @@ function preload() {
     canvasHeight = windowHeight - 100; // Set canvas height to the user's screen height
     canvasWidth = canvasHeight * aspectRatio; // Calculate canvas width based on aspect ratio
     field.resize(canvasWidth, canvasHeight); // Resize the image to fit the canvas
+    console.log('Canvas Width set to:', canvasWidth);
+    console.log('Canvas Height set to:', canvasHeight);
   });
 }
 
@@ -89,6 +91,9 @@ function draw() {
   if (draggedPointIndex !== -1) {
     let newX = mouseX + offsetX;
     let newY = mouseY + offsetY;
+    
+    console.log('Attempting to drag point', draggedPointIndex);
+    console.log('MouseX:', mouseX, 'Canvas Width:', canvasWidth, 'Buffer:', buffer);
 
     const buffer = 12; // Set a buffer distance from the edge of the field
 
