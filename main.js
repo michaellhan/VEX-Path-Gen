@@ -93,7 +93,7 @@ function draw() {
     let newY = mouseY + offsetY;
     
     console.log('Attempting to drag point', draggedPointIndex);
-    console.log('MouseX:', mouseX, 'Canvas Width:', canvasWidth, 'Buffer:', buffer);
+    console.log('MouseX:', mouseX, 'Canvas Width:', canvasWidth);
 
     const buffer = 12; // Set a buffer distance from the edge of the field
 
@@ -106,6 +106,7 @@ function draw() {
     dots[draggedPointIndex].x = newX;
     dots[draggedPointIndex].y = newY;
     updateCoordinatesDisplay();
+    console.log('MouseX:', mouseX, 'Canvas Width:', canvasWidth, 'Buffer:', buffer);
   }
 
   // Convert dots array into waypoints array with Point objects
