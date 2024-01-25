@@ -280,9 +280,9 @@ function adjustPointForCollinearity(path, index) {
       const adjustedPoint3kPlus2 = projectPointOnLine(point3k, point3kPlus1, point3kPlus2);
 
       path[index] = adjustedPoint3kPlus2;
-      if(path.length > index){
-        path.pop();
-      }
+      // if(path.length > index){
+      //   path.pop();
+      // }
   }
 }
 
