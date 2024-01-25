@@ -300,6 +300,7 @@ function stopDragging() {
       if (selectedMethod === 'cubic-spline') {
           let mappedDots = dots.map(dot => new Point(dot.x, dot.y));
           adjustPointForCollinearity(mappedDots, draggedPointIndex);
+          mappedDots.pop();
           dots = mappedDots.map(pt => ({ x: pt.x, y: pt.y }));
       }
       updateCoordinatesDisplay(); 
